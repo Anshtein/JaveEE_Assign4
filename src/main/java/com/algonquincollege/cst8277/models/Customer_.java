@@ -1,3 +1,4 @@
+
 package com.algonquincollege.cst8277.models;
 
 import javax.annotation.Generated;
@@ -11,3 +12,4 @@ public class Customer_ extends ModelBase_ {
 	public static volatile SingularAttribute<Customer, String> lastName;
 	public static volatile SingularAttribute<Customer, Contact> contact;
 }
+
