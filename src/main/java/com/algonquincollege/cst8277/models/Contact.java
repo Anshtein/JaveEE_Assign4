@@ -2,8 +2,11 @@ package com.algonquincollege.cst8277.models;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
 
 @Entity
 @EntityListeners({AuditListener.class})
@@ -17,9 +20,25 @@ public class Contact extends ModelBase implements Serializable {
     protected String city;
     protected String province;
     protected String postalCode;
+    protected Customer customer;
     
+    
+
     public Contact() {
         super();
+    }
+    
+    /**
+     * Map OneToOne and get the child entity
+     * @return Customer customer
+     */
+    @OneToOne(orphanRemoval=true, mappedBy="contact", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public String getEmail() {

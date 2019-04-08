@@ -17,12 +17,14 @@
 package com.algonquincollege.cst8277.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -37,6 +39,8 @@ public class Customer extends ModelBase implements Serializable {
     protected String firstName;
     protected String lastName;
     protected Contact contact;
+    protected List<Payment> payments;
+    
 
     //TODO - 1:1 relationship to core entity
 
@@ -49,6 +53,15 @@ public class Customer extends ModelBase implements Serializable {
 	public void setContact(Contact contact) {
 		this.contact = contact;
 	}
+	
+    @OneToMany(mappedBy="owner", cascade=CascadeType.ALL, fetch=FetchType.LAZY)  
+    public List<Payment> getPayment() {
+        return payments;
+    }
+    
+    public void setPayment(List<Payment> payments) {
+    	this.payments = payments;
+    }
 
 	public Customer() {
         super();
