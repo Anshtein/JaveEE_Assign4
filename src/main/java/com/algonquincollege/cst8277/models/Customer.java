@@ -18,11 +18,15 @@ package com.algonquincollege.cst8277.models;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 /**
- * Customer class
+ * Employee class
  */
 @Entity
 @EntityListeners({AuditListener.class})
@@ -33,10 +37,20 @@ public class Customer extends ModelBase implements Serializable {
     protected String firstName;
     protected String lastName;
     protected Contact contact;
-    
+
     //TODO - 1:1 relationship to core entity
 
-    public Customer() {
+    @OneToOne(orphanRemoval=true, cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
+    @JoinColumn(name="CONTACT_ID")
+    public Contact getContact() {
+		return contact;
+	}
+
+	public void setContact(Contact contact) {
+		this.contact = contact;
+	}
+
+	public Customer() {
         super();
     }
 
@@ -52,7 +66,7 @@ public class Customer extends ModelBase implements Serializable {
     }
     public void setLastName(String lName) {
         this.lastName = lName;
-    }    
+    }
 
     @Override
     public int hashCode() {
@@ -89,7 +103,7 @@ public class Customer extends ModelBase implements Serializable {
             .append(", firstName=")
             .append(firstName)
             .append(", lastName=")
-            .append(lastName)            
+            .append(lastName)
             .append(", version=")
             .append(version)
             .append(", created=")

@@ -5,7 +5,7 @@ import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2019-04-07T04:24:16.112+0000")
+@Generated(value="Dali", date="2019-04-08T16:27:18.381+0000")
 @StaticMetamodel(PlatformRole.class)
 public class PlatformRole_ extends ModelBase_ {
 	public static volatile ListAttribute<PlatformRole, PlatformUser> platformUsers;

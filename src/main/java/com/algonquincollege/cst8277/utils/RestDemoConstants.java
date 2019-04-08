@@ -15,7 +15,7 @@ public interface RestDemoConstants {
     public static final String DEFAULT_KEY_SIZE    = "32";
 
     //JPA constants
-    public static final String PU_NAME = "rest-demo-with-security";
+    public static final String PU_NAME = "shopping_cart_jee5";
     public static final String PLATFORM_USER_TABLE_NAME = "PLATFORM_USER";
     public static final String PLATFORM_USER_JOIN_TABLE_NAME = "PLATFORM_USER_ROLE";
     public static final String ID_COLUMN_NAME = "ID";

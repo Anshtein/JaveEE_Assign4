@@ -1,9 +1,15 @@
 package com.algonquincollege.cst8277.models;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
 @EntityListeners({AuditListener.class})
@@ -12,24 +18,32 @@ public class Cart extends ModelBase implements Serializable {
     private static final long serialVersionUID = 1L;
     
     protected int quantity;
+    protected List<Product> products;
     
     public Cart() {
         super();
     }
     
+    @ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @JoinTable(name="CART_PROD",
+    joinColumns=@JoinColumn(name="CART_ID"),
+    inverseJoinColumns=@JoinColumn(name="PROD_ID"))
+    public List<Product> getProducts() {
+        return products;
+    }  
+    
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
     
     
     public int getQuantity() {
         return quantity;
     }
 
-
-
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
-
 
     @Override
     public int hashCode() {
