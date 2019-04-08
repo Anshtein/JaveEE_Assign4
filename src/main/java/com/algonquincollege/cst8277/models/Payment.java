@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 @EntityListeners({AuditListener.class})
@@ -16,6 +19,16 @@ public class Payment extends ModelBase implements Serializable {
     protected String cardExpiry;
     protected String cardCCV;
     protected Customer owner;
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="OWNING_EMP_ID")
+    public Customer getOwner() {
+        return owner;
+    }
+    
+    public void setOwner(Customer owner) {
+        this.owner = owner;
+    }
     
     public Payment() {
         super();
@@ -51,14 +64,6 @@ public class Payment extends ModelBase implements Serializable {
 
     public void setCardCCV(String cardCCV) {
         this.cardCCV = cardCCV;
-    }
-
-    public Customer getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Customer owner) {
-        this.owner = owner;
     }
     
     @Override
