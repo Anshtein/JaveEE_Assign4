@@ -18,8 +18,12 @@ package com.algonquincollege.cst8277.models;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 /**
  * Customer class
@@ -35,6 +39,16 @@ public class Customer extends ModelBase implements Serializable {
     protected Contact contact;
     
     //TODO - 1:1 relationship to core entity
+
+    @OneToOne(orphanRemoval=true, cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
+    @JoinColumn(name="CONTACT_ID")
+    public Contact getContact() {
+        return contact;
+    }
+
+    public void setContact(Contact contact) {
+        this.contact = contact;
+    }
 
     public Customer() {
         super();
