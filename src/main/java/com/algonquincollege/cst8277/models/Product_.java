@@ -5,11 +5,11 @@ import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2019-04-09T15:04:05.742+0000")
+@Generated(value="Dali", date="2019-04-09T19:08:38.119+0000")
 @StaticMetamodel(Product.class)
 public class Product_ extends ModelBase_ {
+	public static volatile SingularAttribute<Product, Choice> choice;
 	public static volatile ListAttribute<Product, Category> categories;
 	public static volatile SingularAttribute<Product, String> name;
 	public static volatile SingularAttribute<Product, Double> price;
-	public static volatile SingularAttribute<Product, Choice> choice;
 }
