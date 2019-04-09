@@ -40,10 +40,9 @@ public class Customer extends ModelBase implements Serializable {
     protected String lastName;
     protected Contact contact;
     protected List <Payment> cards;
-    protected List <Invoice> invoice;
+    protected List <Cart> carts;
     protected PlatformUser user;
-    protected List<Payment> payments;
-
+    
     public Customer() {
         super();
     }
@@ -60,15 +59,7 @@ public class Customer extends ModelBase implements Serializable {
 		this.contact = contact;
 	}
 	
-    @OneToMany(mappedBy="owner", cascade=CascadeType.ALL, fetch=FetchType.LAZY)  
-    public List<Payment> getPayment() {
-        return payments;
-    }
     
-    public void setPayment(List<Payment> payments) {
-    	this.payments = payments;
-    }
-
 
     @OneToMany(mappedBy="owner", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     public List<Payment> getCards() {
@@ -80,12 +71,12 @@ public class Customer extends ModelBase implements Serializable {
     }
 
     @OneToMany(mappedBy="customer", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-    public List<Invoice> getInvoice() {
-        return invoice;
+    public List<Cart> getCarts() {
+        return carts;
     }
 
-    public void setInvoice(List<Invoice> invoice) {
-        this.invoice = invoice;
+    public void setCarts(List<Cart> carts) {
+        this.carts = carts;
     }    
     
     @OneToOne(orphanRemoval=true, cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
