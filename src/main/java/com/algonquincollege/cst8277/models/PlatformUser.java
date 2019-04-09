@@ -11,11 +11,13 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.algonquincollege.cst8277.utils.RestDemoConstants;
@@ -42,6 +44,7 @@ public class PlatformUser extends ModelBase implements Serializable {
     protected String username;
     protected String pwHash;
     protected Set<PlatformRole> platformRoles = new HashSet<>();
+    protected Customer customer;
 
     public String getUsername() {
         return username;
@@ -70,5 +73,20 @@ public class PlatformUser extends ModelBase implements Serializable {
     public void setPlatformRoles(Set<PlatformRole> platformRoles) {
         this.platformRoles = platformRoles;
     }
+    
+    
+    /**
+     * Map OneToOne and get the child entity
+     * @return Customer customer
+     */
+    @OneToOne(orphanRemoval=true, mappedBy="user", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
+    public Customer getCustomer() {
+        return customer;
+    }
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
+    
+    
 }

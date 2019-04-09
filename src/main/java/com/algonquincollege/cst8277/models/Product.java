@@ -18,10 +18,14 @@ public class Product extends ModelBase implements Serializable {
     private static final long serialVersionUID = 1L;
 
     protected String name;
-    protected double price;
-    protected Category category;
+    protected double price;    
     protected List<Cart> carts;
+    protected List<Category> categories;
     
+    
+    public Product() {
+        super();
+    }
     
     @ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     @JoinTable(name="CART_PROD",
@@ -35,8 +39,17 @@ public class Product extends ModelBase implements Serializable {
         this.carts = carts;
     }
         
-    public Product() {
-        super();
+
+    @ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @JoinTable(name="CATEGORY_PROD",
+    joinColumns=@JoinColumn(name="PROD_ID"),
+    inverseJoinColumns=@JoinColumn(name="CATEGORY_ID"))
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
     public String getName() {
@@ -53,14 +66,6 @@ public class Product extends ModelBase implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
     
     @Override

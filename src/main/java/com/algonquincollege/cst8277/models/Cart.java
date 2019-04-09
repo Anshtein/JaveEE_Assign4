@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 @EntityListeners({AuditListener.class})
@@ -19,6 +20,7 @@ public class Cart extends ModelBase implements Serializable {
     
     protected int quantity;
     protected List<Product> products;
+    protected Invoice invoice;
     
     public Cart() {
         super();
@@ -37,6 +39,19 @@ public class Cart extends ModelBase implements Serializable {
     }
     
     
+    /**
+     * Map OneToOne and get the child entity
+     * @return Invoice invoice
+     */
+    @OneToOne(orphanRemoval=true, mappedBy="cart", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
+
     public int getQuantity() {
         return quantity;
     }

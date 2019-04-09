@@ -1,7 +1,7 @@
 package com.algonquincollege.cst8277.rest;
 
 
-import static com.algonquincollege.cst8277.rest.CustomerConstants.EMPLOYEE_RESOURCE_NAME;
+import static com.algonquincollege.cst8277.rest.CustomerConstants.CUSTOMER_RESOURCE_NAME;
 import static com.algonquincollege.cst8277.rest.CustomerConstants.EMPLOYEE_RESOURCE_PATH_ID_ELEMENT;
 import static com.algonquincollege.cst8277.rest.CustomerConstants.EMPLOYEE_RESOURCE_PATH_ID_PATH;
 import static com.algonquincollege.cst8277.rest.CustomerConstants.GET_EMPLOYEES_OP_200_DESC;
@@ -9,7 +9,7 @@ import static com.algonquincollege.cst8277.rest.CustomerConstants.GET_EMPLOYEES_
 //import static com.algonquincollege.cst8277.rest.EmployeeConstants.GET_EMPLOYEES_OP_403_DESC_JSON_MSG;
 //import static com.algonquincollege.cst8277.rest.EmployeeConstants.GET_EMPLOYEES_OP_403_JSON_MSG;
 import static com.algonquincollege.cst8277.rest.CustomerConstants.GET_EMPLOYEES_OP_404_DESC;
-import static com.algonquincollege.cst8277.rest.CustomerConstants.GET_EMPLOYEES_OP_DESC;
+import static com.algonquincollege.cst8277.rest.CustomerConstants.GET_CUSTOMERS_OP_DESC;
 import static com.algonquincollege.cst8277.rest.CustomerConstants.GET_EMPLOYEE_BY_ID_OP_200_DESC;
 import static com.algonquincollege.cst8277.rest.CustomerConstants.GET_EMPLOYEE_BY_ID_OP_403_DESC;
 import static com.algonquincollege.cst8277.rest.CustomerConstants.GET_EMPLOYEE_BY_ID_OP_404_DESC;
@@ -42,7 +42,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import com.algonquincollege.cst8277.ejb.SimpleBean;
 import com.algonquincollege.cst8277.models.Customer;
 
-@Path(EMPLOYEE_RESOURCE_NAME)
+@Path(CUSTOMER_RESOURCE_NAME)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CustomerResource {
@@ -54,7 +54,7 @@ public class CustomerResource {
     protected SecurityContext sc;
 
     @GET
-    @Operation(description = GET_EMPLOYEES_OP_DESC)
+    @Operation(description = GET_CUSTOMERS_OP_DESC)
     @APIResponses({
         @APIResponse(responseCode = "200", description = GET_EMPLOYEES_OP_200_DESC),
         @APIResponse(responseCode = "403", description = GET_EMPLOYEES_OP_403_DESC),

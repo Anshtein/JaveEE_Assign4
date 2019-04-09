@@ -1,9 +1,15 @@
 package com.algonquincollege.cst8277.models;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
 @EntityListeners({AuditListener.class})
@@ -12,10 +18,25 @@ public class Category extends ModelBase implements Serializable {
     private static final long serialVersionUID = 1L;
 
     protected String name;
+    protected List<Product> products;
     
     public Category () {
         super();
     }
+
+    @ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @JoinTable(name="CATEGORY_PROD",
+    joinColumns=@JoinColumn(name="CATEGORY_ID"),
+    inverseJoinColumns=@JoinColumn(name="PROD_ID"))    
+    public List<Product> getProduct() {
+        return products;
+    }
+
+
+    public void setProduct(List<Product> products) {
+        this.products = products;
+    }
+
 
     public String getName() {
         return name;
