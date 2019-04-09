@@ -17,12 +17,14 @@
 package com.algonquincollege.cst8277.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -37,7 +39,14 @@ public class Customer extends ModelBase implements Serializable {
     protected String firstName;
     protected String lastName;
     protected Contact contact;
+    protected List <Payment> cards;
+    protected List <Invoice> invoice;
+    protected PlatformUser user;
     
+
+    public Customer() {
+        super();
+    }
     //TODO - 1:1 relationship to core entity
 
     @OneToOne(orphanRemoval=true, cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
@@ -50,8 +59,32 @@ public class Customer extends ModelBase implements Serializable {
         this.contact = contact;
     }
 
-    public Customer() {
-        super();
+    @OneToMany(mappedBy="owner", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    public List<Payment> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<Payment> cards) {
+        this.cards = cards;
+    }
+
+    @OneToMany(mappedBy="customer", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    public List<Invoice> getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(List<Invoice> invoice) {
+        this.invoice = invoice;
+    }    
+    
+    @OneToOne(orphanRemoval=true, cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
+    @JoinColumn(name="USER_ID")
+    public PlatformUser getUser() {
+        return user;
+    }
+
+    public void setUser(PlatformUser user) {
+        this.user = user;
     }
 
     public String getFirstName() {

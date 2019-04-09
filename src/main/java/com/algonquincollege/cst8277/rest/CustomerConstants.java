@@ -6,11 +6,11 @@ public interface CustomerConstants {
     public static final String SUFFIX_JSON_MSG = "\"}";
 
     public static final String PRIMARY_KEY_DESC = "primary key";
-    public static final String EMPLOYEE_RESOURCE_NAME =  "employee";
+    public static final String CUSTOMER_RESOURCE_NAME =  "customer";
     public static final String EMPLOYEE_RESOURCE_PATH_ID_ELEMENT =  "id";
     public static final String EMPLOYEE_RESOURCE_PATH_ID_PATH =  "/{" + EMPLOYEE_RESOURCE_PATH_ID_ELEMENT + "}";
 
-    public static final String GET_EMPLOYEES_OP_DESC = "Retrieves list of Employees";
+    public static final String GET_CUSTOMERS_OP_DESC = "Retrieves list of Customers";
     public static final String GET_EMPLOYEES_OP_200_DESC = "Successful, returning employees";
     public static final String GET_EMPLOYEES_OP_403_DESC = "Only admin's can list all employees";
     public static final String GET_EMPLOYEES_OP_404_DESC = "Could not find employees";
