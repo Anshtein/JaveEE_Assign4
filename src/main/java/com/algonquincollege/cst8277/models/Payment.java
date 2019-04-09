@@ -20,6 +20,16 @@ public class Payment extends ModelBase implements Serializable {
     protected String cardCCV;
     protected Customer owner;
     
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="OWNING_EMP_ID")
+    public Customer getOwner() {
+        return owner;
+    }
+    
+    public void setOwner(Customer owner) {
+        this.owner = owner;
+    }
+    
     public Payment() {
         super();
     }
@@ -65,12 +75,15 @@ public class Payment extends ModelBase implements Serializable {
     public void setCardCCV(String cardCCV) {
         this.cardCCV = cardCCV;
     }
+<<<<<<< HEAD
 
 
 
     public void setOwner(Customer owner) {
         this.owner = owner;
     }
+=======
+>>>>>>> 53db79b502f34a32c29e1465cde15fa3d517d42b
     
     @Override
     public int hashCode() {

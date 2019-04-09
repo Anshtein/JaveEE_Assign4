@@ -28,7 +28,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
- * Customer class
+ * Employee class
  */
 @Entity
 @EntityListeners({AuditListener.class})
@@ -39,6 +39,7 @@ public class Customer extends ModelBase implements Serializable {
     protected String firstName;
     protected String lastName;
     protected Contact contact;
+<<<<<<< HEAD
     protected List <Payment> cards;
     protected List <Invoice> invoice;
     protected PlatformUser user;
@@ -47,18 +48,33 @@ public class Customer extends ModelBase implements Serializable {
     public Customer() {
         super();
     }
+=======
+    protected List<Payment> payments;
+    
+
+>>>>>>> 53db79b502f34a32c29e1465cde15fa3d517d42b
     //TODO - 1:1 relationship to core entity
 
     @OneToOne(orphanRemoval=true, cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
     @JoinColumn(name="CONTACT_ID")
     public Contact getContact() {
-        return contact;
+		return contact;
+	}
+
+	public void setContact(Contact contact) {
+		this.contact = contact;
+	}
+	
+    @OneToMany(mappedBy="owner", cascade=CascadeType.ALL, fetch=FetchType.LAZY)  
+    public List<Payment> getPayment() {
+        return payments;
+    }
+    
+    public void setPayment(List<Payment> payments) {
+    	this.payments = payments;
     }
 
-    public void setContact(Contact contact) {
-        this.contact = contact;
-    }
-
+<<<<<<< HEAD
     @OneToMany(mappedBy="owner", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     public List<Payment> getCards() {
         return cards;
@@ -85,6 +101,10 @@ public class Customer extends ModelBase implements Serializable {
 
     public void setUser(PlatformUser user) {
         this.user = user;
+=======
+	public Customer() {
+        super();
+>>>>>>> 53db79b502f34a32c29e1465cde15fa3d517d42b
     }
 
     public String getFirstName() {
@@ -99,7 +119,7 @@ public class Customer extends ModelBase implements Serializable {
     }
     public void setLastName(String lName) {
         this.lastName = lName;
-    }    
+    }
 
     @Override
     public int hashCode() {
@@ -136,7 +156,7 @@ public class Customer extends ModelBase implements Serializable {
             .append(", firstName=")
             .append(firstName)
             .append(", lastName=")
-            .append(lastName)            
+            .append(lastName)
             .append(", version=")
             .append(version)
             .append(", created=")
