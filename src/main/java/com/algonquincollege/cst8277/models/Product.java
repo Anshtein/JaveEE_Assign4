@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 @EntityListeners({AuditListener.class})
@@ -19,26 +20,28 @@ public class Product extends ModelBase implements Serializable {
 
     protected String name;
     protected double price;    
-    protected List<Cart> carts;
+    protected Choice choice;
     protected List<Category> categories;
     
     
     public Product() {
         super();
     }
-    
-    @ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-    @JoinTable(name="CART_PROD",
-    joinColumns=@JoinColumn(name="PROD_ID"),
-    inverseJoinColumns=@JoinColumn(name="CART_ID"))
-    public List<Cart> getCarts() {
-        return carts;
-    }
-    
-    public void setCarts(List<Cart> carts) {
-        this.carts = carts;
-    }
         
+        
+    /**
+     * Map OneToOne and get the child entity
+     * @return Choice choice
+     */
+    @OneToOne(orphanRemoval=true, mappedBy="product", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
+    public Choice getChoice() {
+        return choice;
+    }
+
+    public void setChoice(Choice choice) {
+        this.choice = choice;
+    }
+
 
     @ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     @JoinTable(name="CATEGORY_PROD",
