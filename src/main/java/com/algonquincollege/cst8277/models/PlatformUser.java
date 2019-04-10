@@ -6,6 +6,7 @@ import static com.algonquincollege.cst8277.utils.RestDemoConstants.PLATFORM_USER
 import static com.algonquincollege.cst8277.utils.RestDemoConstants.PLATFORM_USER_JOIN_TABLE_NAME;
 
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,7 +34,7 @@ import com.algonquincollege.cst8277.utils.RestDemoConstants;
         query=RestDemoConstants.FIND_PLATFORM_USER_BY_NAME_JPQL
     )
 )
-public class PlatformUser extends ModelBase implements Serializable {
+public class PlatformUser extends ModelBase implements Serializable, Principal {
     /** explicit set serialVersionUID */
     private static final long serialVersionUID = 1L;
 
@@ -46,6 +47,11 @@ public class PlatformUser extends ModelBase implements Serializable {
     protected Set<PlatformRole> platformRoles = new HashSet<>();
     protected Customer customer;
 
+    @Override
+    public String getName() {
+        return username;
+    }
+    
     public String getUsername() {
         return username;
     }

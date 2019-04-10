@@ -73,5 +73,25 @@ public class BuildDefaultAdminUser {
             platformRoles.add(platformRole);
             jpaHelper.savePlatformUser(defaultAdminUser);
         }
+        
+        String customer = "customer";
+        PlatformUser customerUser = jpaHelper.findUserByName(customer);
+        if (customerUser == null) {
+        	customerUser = new PlatformUser();
+        	customerUser.setUsername(defaultAdminUsername);
+            Map<String, String> pbAndjProperties = new HashMap<>();
+            pbAndjProperties.put(PROPERTY_ALGORITHM, DEFAULT_PROPERTY_ALGORITHM);
+            pbAndjProperties.put(PROPERTY_ITERATIONS, DEFAULT_PROPERTY_ITERATIONS);
+            pbAndjProperties.put(PROPERTY_SALTSIZE, DEFAULT_SALT_SIZE);
+            pbAndjProperties.put(PROPERTY_KEYSIZE, DEFAULT_KEY_SIZE);
+            pbAndjPasswordHash.initialize(pbAndjProperties);
+            String pwHash = pbAndjPasswordHash.generate(defaultAdminUserPassword.toCharArray());
+            customerUser.setPwHash(pwHash);
+
+            PlatformRole platformRole = new PlatformRole();
+            platformRole.setRoleName(customer);
+            Set<PlatformRole> platformRoles = defaultAdminUser.getPlatformRoles();
+            platformRoles.add(platformRole);
+        }
     }
 }

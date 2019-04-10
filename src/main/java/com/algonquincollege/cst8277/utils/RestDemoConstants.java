@@ -32,7 +32,7 @@ public interface RestDemoConstants {
     public static final String SERVER_API_DESC = "API resource for Employee (slightly modified from Assignment3) with Java EE 8 Security";
     public static final String SERVER_URL = "/shopping-cart";
     public static final String ADMIN_ROLENAME = "admin";
-    public static final String USER_ROLENAME = "user";
+    public static final String USER_ROLENAME = "customer";
     public static final String DEFAULT_ADMIN_USER_PASSWORD_PROPNAME = "default-admin-user-password";
 
 }

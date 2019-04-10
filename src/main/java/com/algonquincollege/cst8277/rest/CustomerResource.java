@@ -68,7 +68,7 @@ public class CustomerResource {
         @APIResponse(responseCode = "404", description = GET_EMPLOYEES_OP_404_DESC)
     })
     @RolesAllowed(ADMIN_ROLENAME)
-    public Response getEmployees() {
+    public Response getCustomers() {
         Response response = null;
 
         /*
