@@ -7,22 +7,15 @@
     <jta-data-source>jdbc/ShoppingCartJEE5</jta-data-source>
     <class>com.algonquincollege.cst8277.models.Audit</class>
     <class>com.algonquincollege.cst8277.models.Contact</class>
-<<<<<<< HEAD
     <class>com.algonquincollege.cst8277.models.Invoice</class>
     <class>com.algonquincollege.cst8277.models.Payment</class>
-=======
->>>>>>> 53db79b502f34a32c29e1465cde15fa3d517d42b
     <class>com.algonquincollege.cst8277.models.Customer</class>
     <class>com.algonquincollege.cst8277.models.ModelBase</class>
     <class>com.algonquincollege.cst8277.models.PlatformRole</class>
     <class>com.algonquincollege.cst8277.models.PlatformUser</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-<<<<<<< HEAD
     <properties>       
-=======
-    <properties>
    	  <property name="eclipselink.deploy-on-startup" value="true" />
->>>>>>> 53db79b502f34a32c29e1465cde15fa3d517d42b
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
 <!--       <property name="javax.persistence.schema-generation.database.action" value="validate"/> -->
       <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform" />

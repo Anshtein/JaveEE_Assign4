@@ -32,7 +32,39 @@ public class SimpleBean {
         em.merge(empWithUpdatedFields);
     }
 
-    public Customer getEmployeeById(int id) {
+    public Customer getCustomerById(int id) {
         return em.find(Customer.class, id);
+    }
+    
+    public boolean addCustomer(String firstName, String lastName) {
+    	if (!firstName.isEmpty() && !lastName.isEmpty()) {
+	    	Customer newCustomer = new Customer();
+	    	newCustomer.setFirstName(firstName);
+	    	newCustomer.setLastName(lastName);
+	    	
+	    	em.persist(newCustomer);
+	    	
+	    	if(em.contains(newCustomer))
+	    		return true;
+	    	else return false;
+    	}
+    	return false;
+    }
+    
+    public boolean deleteCustomer(Customer customer) {
+    	if (!em.contains(customer)) {
+    	    customer = em.merge(customer);
+    	}
+    	em.remove(customer);
+    	
+    	if(em.contains(customer))
+    		return false;
+    	else return true;	
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Customer updateCustomer(Customer customerWithUpdatedFields) {
+        em.merge(customerWithUpdatedFields);
+        return em.find(Customer.class, customerWithUpdatedFields.getId());
     }
 }
