@@ -8,56 +8,41 @@ import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 @EntityListeners({AuditListener.class})
 public class Cart extends ModelBase implements Serializable {
     /** explicit set serialVersionUID */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;    
     
-    protected int quantity;
-    protected List<Product> products;
-    protected Invoice invoice;
+    protected List<Choice> choices;
+    protected Customer customer;
+    
     
     public Cart() {
         super();
     }
     
-    @ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-    @JoinTable(name="CART_PROD",
-    joinColumns=@JoinColumn(name="CART_ID"),
-    inverseJoinColumns=@JoinColumn(name="PROD_ID"))
-    public List<Product> getProducts() {
-        return products;
+    @OneToMany(mappedBy="cart", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    public List<Choice> getChoices() {
+        return choices;
     }  
     
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setChoices(List<Choice> choices) {
+        this.choices = choices;
     }
-    
-    
-    /**
-     * Map OneToOne and get the child entity
-     * @return Invoice invoice
-     */
-    @OneToOne(orphanRemoval=true, mappedBy="cart", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
-    public Invoice getInvoice() {
-        return invoice;
+  
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="OWNING_CUST_ID")
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setInvoice(Invoice invoice) {
-        this.invoice = invoice;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     @Override
@@ -91,9 +76,7 @@ public class Cart extends ModelBase implements Serializable {
         StringBuilder builder = new StringBuilder();
         builder
             .append("Contact [id=")
-            .append(id)
-            .append(", quantity=")
-            .append(String.valueOf(quantity))                   
+            .append(id)                              
             .append(", version=")
             .append(version)
             .append(", created=")
