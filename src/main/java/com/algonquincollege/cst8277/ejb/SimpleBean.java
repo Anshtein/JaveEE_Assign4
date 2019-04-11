@@ -19,6 +19,7 @@ import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import com.algonquincollege.cst8277.models.Customer;
 import com.algonquincollege.cst8277.models.PlatformRole;
 import com.algonquincollege.cst8277.models.PlatformRole_;
+import com.algonquincollege.cst8277.models.PlatformUser;
 
 
 
@@ -47,14 +48,20 @@ public class SimpleBean {
         return em.find(Customer.class, id);
     }
     
+    public boolean checkCustomerUsernameId(String username, int id) {
+    	Customer customer = getCustomerById(id);
+    	PlatformUser pu = customer.getUser();
+    	String customerUsername = pu.getUsername();
+    	if(customerUsername.equals(username)) {
+//    	if (customerUsername.toUpperCase() == username.toUpperCase()) {
+    		return true;
+    	}
+		return false;
+    	
+    }
+    
     public boolean addCustomer(String firstName, String lastName) {
     	if (!firstName.isEmpty() && !lastName.isEmpty()) {
-	    	Customer newCustomer = new Customer();
-	    	newCustomer.setFirstName(firstName);
-	    	newCustomer.setLastName(lastName);
-	    	
-	    	em.persist(newCustomer);
-	    	
 	    	String userPassword = "temppwd";
 	    	String customerRole = "customer";
 	    	
@@ -64,10 +71,18 @@ public class SimpleBean {
 	        cq.select(root);
 	        cq.where(cb.equal(root.get(PlatformRole_.roleName), "customer"));
 	        TypedQuery<PlatformRole> tq = em.createQuery(cq);
-	        List<PlatformRole> role = tq.getResultList();  
+	        List<PlatformRole> role = tq.getResultList(); 
+	        
+	    	PlatformUser pu = buildUser.buildUser(firstName+lastName, userPassword, role);
+
+    		
+	    	Customer newCustomer = new Customer();
+	    	newCustomer.setFirstName(firstName);
+	    	newCustomer.setLastName(lastName);
+	    	newCustomer.setUser(pu);
 	    	
-	    	buildUser.buildUser(firstName+lastName, userPassword, role);
-	    	
+	    	em.persist(newCustomer);
+   		    		    	
 	    	if(em.contains(newCustomer))
 	    		return true;
 	    	else return false;
