@@ -24,12 +24,19 @@ import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.security.enterprise.SecurityContext;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 //import javax.ws.rs.core.Response.Status;
@@ -61,7 +68,7 @@ public class CustomerResource {
         @APIResponse(responseCode = "404", description = GET_EMPLOYEES_OP_404_DESC)
     })
     @RolesAllowed(ADMIN_ROLENAME)
-    public Response getEmployees() {
+    public Response getCustomers() {
         Response response = null;
 
         /*
@@ -98,7 +105,7 @@ public class CustomerResource {
         }
         else {
         */
-        Customer emp = simpleBean.getEmployeeById(id);
+        Customer emp = simpleBean.getCustomerById(id);
             if (emp == null) {
                 response = Response.status(NOT_FOUND).build();
             }
@@ -111,5 +118,45 @@ public class CustomerResource {
 
         return response;
     }
+    
+    @POST
+    @Path("/create/{param1}/{param2}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response create(@PathParam("param1") String param1,
+                       @PathParam("param2") String param2) {
+        boolean output = simpleBean.addCustomer(param1, param2);      
+        return Response.status(200).entity(output).build();
+    }
+    
+    @POST
+    @Path("/create")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response createQuery(@QueryParam("param1") String param1,
+                       @QueryParam("param2") String param2) {
+        boolean output = simpleBean.addCustomer(param1, param2);
+        return Response.status(200).entity(output).build();
+    }
+    
+    @PUT
+    @Path("/update/{id}/{firstName}/{lastName}")
+    @Produces("application/json")
+    public Response updateCustomer(@PathParam("id")int id, @PathParam("firstName") String firstName, @PathParam("lastName") String lastName)
+    {
+    	Customer customer = simpleBean.getCustomerById(id);
+    	if(!firstName.isEmpty()) customer.setFirstName(firstName);
+    	if(!lastName.isEmpty()) customer.setLastName(lastName);
+    	Customer updated = simpleBean.updateCustomer(customer);
+    	return Response.ok(updated).build();
+    }
+  
+    @DELETE
+    @Path("/delete/{id}")
+    @Produces("application/json")
+    public Response deleteById(@PathParam("id")int id){
+       Customer customer = simpleBean.getCustomerById(id);
+       boolean output = simpleBean.deleteCustomer(customer);
+	return Response.status(200).entity(output).build();
+    }
+    
 
 }
