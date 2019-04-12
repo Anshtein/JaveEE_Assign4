@@ -19,7 +19,6 @@ public class Choice extends ModelBase implements Serializable {
     protected Cart cart;
     protected Product product;
     
-
     public Choice () {
         super();
     }
@@ -29,6 +28,7 @@ public class Choice extends ModelBase implements Serializable {
     public Cart getCart() {
         return cart;
     }
+    
     public void setCart(Cart cart) {
         this.cart = cart;
     }
@@ -43,15 +43,13 @@ public class Choice extends ModelBase implements Serializable {
         this.product = product;
     }
 
-    
     public int getQuantity() {
         return quantity;
     }
+    
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-   
-    
+    } 
     
 
 }

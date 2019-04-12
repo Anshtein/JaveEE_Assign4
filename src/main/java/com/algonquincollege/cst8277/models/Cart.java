@@ -20,7 +20,6 @@ public class Cart extends ModelBase implements Serializable {
     protected List<Choice> choices;
     protected Customer customer;
     
-    
     public Cart() {
         super();
     }
@@ -34,7 +33,6 @@ public class Cart extends ModelBase implements Serializable {
         this.choices = choices;
     }
   
-
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="OWNING_CUST_ID")
     public Customer getCustomer() {
