@@ -1,3 +1,15 @@
+/********************************************************************egg***m******a**************n************
+ * File: Cart.java
+ * Course materials (19W) CST 8277
+ * @author Mike Norman
+ * @author Elena Soukhanov 040871451
+ * @author Ksenia Lopukhina 040892102
+ * @author Svetlana Netchaeva 040858724
+ * @author Anna Shteyngart 040883547
+ * @author Pavel Jilinski 040878295
+ * @date 2019 04
+ *
+ */
 package com.algonquincollege.cst8277.models;
 
 import java.io.Serializable;
@@ -11,40 +23,74 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+/**
+ * The Cart class is for accessing, persisting, and managing data
+ * associated with Cart entity.
+ * It demonstrates OneToMany and ManyToOne relationship
+ * with two other tables: Choice and Customer
+ */
 @Entity
 @EntityListeners({AuditListener.class})
 public class Cart extends ModelBase implements Serializable {
     /** explicit set serialVersionUID */
     private static final long serialVersionUID = 1L;    
     
+    /**
+     * list of customer choices
+     */
     protected List<Choice> choices;
+    /**
+     * Customer object
+     */
     protected Customer customer;
     
-    
+    /**
+     * default constructor
+     */
     public Cart() {
         super();
     }
     
+    /**
+     * gets choices list, annotated with oneToMany relationship
+     * @return list of choices
+     */
     @OneToMany(mappedBy="cart", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     public List<Choice> getChoices() {
         return choices;
     }  
     
+    /**
+     * sets choices list
+     * @param choices
+     */
     public void setChoices(List<Choice> choices) {
         this.choices = choices;
     }
   
 
+    /**
+     * gets Customer object, 
+     * annotated with ManyToOne representing relationship with Customer table
+     * @return Customer customer
+     */
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="OWNING_CUST_ID")
     public Customer getCustomer() {
         return customer;
     }
 
+    /**
+     * sets Customer
+     * @param customer
+     */
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
+    /**
+     * returns a unique integer value for the object at runtime
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -53,6 +99,9 @@ public class Cart extends ModelBase implements Serializable {
         return result;
     }
 
+    /**
+     * verifies the equality of two objects
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -71,6 +120,9 @@ public class Cart extends ModelBase implements Serializable {
         return true;
     }
 
+    /**
+     * returns the string representation of the object
+     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
