@@ -11,6 +11,12 @@
     <class>com.algonquincollege.cst8277.models.Contact</class>    
     <class>com.algonquincollege.cst8277.models.Payment</class>
     <class>com.algonquincollege.cst8277.models.Customer</class>
+    <class>com.algonquincollege.cst8277.models.Audit</class>
+    <class>com.algonquincollege.cst8277.models.Cart</class>
+    <class>com.algonquincollege.cst8277.models.Category</class>
+    <class>com.algonquincollege.cst8277.models.Contact</class>
+    <class>com.algonquincollege.cst8277.models.Payment</class>
+    <class>com.algonquincollege.cst8277.models.Customer</class>
     <class>com.algonquincollege.cst8277.models.Choice</class>
     <class>com.algonquincollege.cst8277.models.ModelBase</class>
     <class>com.algonquincollege.cst8277.models.PlatformRole</class>

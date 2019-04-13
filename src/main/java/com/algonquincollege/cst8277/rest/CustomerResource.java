@@ -125,7 +125,7 @@ public class CustomerResource {
     }
     
     @POST
-    @Path("/create/{param1}/{param2}")
+    @Path("/{param1}/{param2}")
     @PermitAll
     @Produces(MediaType.TEXT_PLAIN)
     public Response create(@PathParam("param1") String param1,
@@ -135,7 +135,7 @@ public class CustomerResource {
     }
     
     @POST
-    @Path("/create")
+    @Path("/")
     @Produces(MediaType.TEXT_PLAIN)
     public Response createQuery(@QueryParam("param1") String param1,
                        @QueryParam("param2") String param2) {
@@ -144,7 +144,8 @@ public class CustomerResource {
     }
     
     @PUT
-    @Path("/update/{id}/{firstName}/{lastName}")
+    @RolesAllowed(USER_ROLENAME)
+    @Path("/{id}/{firstName}/{lastName}")
     @Produces("application/json")
     public Response updateCustomer(@PathParam("id")int id, @PathParam("firstName") String firstName, @PathParam("lastName") String lastName)
     {
@@ -156,7 +157,8 @@ public class CustomerResource {
     }
   
     @DELETE
-    @Path("/delete/{id}")
+    @RolesAllowed(USER_ROLENAME)
+    @Path("/{id}")
     @Produces("application/json")
     public Response deleteById(@PathParam("id")int id){
        Customer customer = simpleBean.getCustomerById(id);
