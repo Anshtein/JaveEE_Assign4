@@ -24,6 +24,11 @@
     <project.source.level>1.8</project.source.level>
     <project.target.level>1.8</project.target.level>
     <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
+    <maven.processor.plugin.version>3.3.3</maven.processor.plugin.version>
+        <maven.build.helper.plugin.version>3.0.0</maven.build.helper.plugin.version>
+        <maven.surefire.plugin.version>3.0.0-M3</maven.surefire.plugin.version>
+        <maven.site.plugin.version>3.7.1</maven.site.plugin.version>
+        <maven.project.info.reports.plugin.version>3.0.0</maven.project.info.reports.plugin.version>
     <failOnMissingWebXml>false</failOnMissingWebXml>
     
     <!-- code properties -->
@@ -31,8 +36,17 @@
     <javaee.security.version>1.0</javaee.security.version>
     <maven.war.plugin.version>3.2.2</maven.war.plugin.version>
     <eclipse.microprofile.version>[1.0,2)</eclipse.microprofile.version>
-  </properties>
+         <slf4j.version>1.7.25</slf4j.version>
+        <logback.version>1.2.3</logback.version>
+        <h2.version>1.4.197</h2.version>
+        <eclipselink.version>2.7.3</eclipselink.version>
+        <javax.persistence.version>2.2</javax.persistence.version>
 
+        <!-- test properties -->
+        <junit.version>4.12</junit.version>
+
+    </properties>
+  
   <dependencies>
     <dependency>
       <groupId>javax</groupId>
@@ -58,6 +72,12 @@
       <version>${javaee.security.version}</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
   </dependencies>
 
   <build>
@@ -81,7 +101,42 @@
             </archive>
           </configuration>
       </plugin>
-    </plugins>
-  </build>
+    <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.plugin.version}</version>
+                <configuration>
+                    <forkCount>1</forkCount>
+                    <reuseForks>false</reuseForks>
+                    <includes>
+                        <include>**/*TestSuite.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${maven.site.plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${maven.project.info.reports.plugin.version}</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+            </plugin>
+<!--            <plugin> -->
+<!--                <groupId>org.codehaus.mojo</groupId> -->
+<!--                <artifactId>jxr-maven-plugin</artifactId> -->
+<!--            </plugin> -->
+        </plugins>
+    </reporting>
 
 </project>

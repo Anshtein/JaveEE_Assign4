@@ -2,6 +2,7 @@ package com.algonquincollege.cst8277.models;
 
 import java.io.Serializable;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
@@ -28,6 +29,7 @@ public class Payment extends ModelBase implements Serializable {
      * Map ManyToOne and get Employee instance
      * @return
      */
+    @JsonbTransient
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="OWNING_CUST_ID")
     public Customer getOwner() {
