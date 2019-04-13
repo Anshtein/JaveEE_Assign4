@@ -1,11 +1,15 @@
 package com.algonquincollege.cst8277.rest;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.security.enterprise.SecurityContext;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -99,7 +103,6 @@ public class ContactResource {
     @RolesAllowed({USER_ROLENAME, ADMIN_ROLENAME})
     @Path(CONTACT_RESOURCE_PATH_ID_PATH)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    
     public Response getContactByCustomerId(@Parameter(description = PRIMARY_KEY_DESC, required = true)
                                            @QueryParam(CUSTOMER_EXTERNAL_RESOURCE_PATH_ID_ELEMENT) String id) {
         Response response = null;
@@ -115,6 +118,49 @@ public class ContactResource {
     }
     
     
+    @POST
+    @Path("/{city}/{email}/{phone}/{postalCode}/{province}/{street}")
+    @PermitAll
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response create(@PathParam("city") String city,
+                       @PathParam("email") String email, @PathParam("phone") String phone, 
+                       @PathParam("postalCode") String postalCode, @PathParam("province") String province,
+                       @PathParam("street") String street) {
+        boolean output = contactBean.addContact(city, email, phone, postalCode, province, street);      
+        return Response.status(200).entity(output).build();
+    }
+    
+    @PUT
+    @RolesAllowed(USER_ROLENAME)
+    @Path("/{customerid}/{contactid}")
+    @Produces("application/json")
+    public Response addCustomerToContact(@PathParam("customerid")int customerid,
+    		@PathParam("contactid") int contactid)
+    {	
+    	Customer updated = contactBean.updateCustomerToContact(customerid, contactid);
+    	return Response.ok(updated).build();
+    }
+    
+    @PUT
+    @Path("/{id}/{city}/{email}/{phone}/{postalCode}/{province}/{street}")
+    @PermitAll
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response updateContact(@PathParam("id") String id, @PathParam("city") String city,
+                       @PathParam("email") String email, @PathParam("phone") String phone, 
+                       @PathParam("postalCode") String postalCode, @PathParam("province") String province,
+                       @PathParam("street") String street) {
+        Contact output = contactBean.updateContact(id, city, email, phone, postalCode, province, street);      
+        return Response.status(200).entity(output).build();
+    }
+    
+    @DELETE
+    @RolesAllowed(USER_ROLENAME)
+    @Path("/{id}")
+    @Produces("application/json")
+    public Response deleteById(@PathParam("id")int id){
+       boolean output = contactBean.deleteContactByCustID(id);
+	return Response.status(200).entity(output).build();
+    }
     
     
 }

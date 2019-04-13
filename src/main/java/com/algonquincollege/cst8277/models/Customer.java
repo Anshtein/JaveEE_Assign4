@@ -49,7 +49,7 @@ public class Customer extends ModelBase implements Serializable {
 
     //TODO - 1:1 relationship to core entity
 
-    @OneToOne(orphanRemoval=true, cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
+    @OneToOne(cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
     @JoinColumn(name="CONTACT_ID")
     public Contact getContact() {
 		return contact;
@@ -59,8 +59,6 @@ public class Customer extends ModelBase implements Serializable {
 		this.contact = contact;
 	}
 	
-    
-
     @OneToMany(mappedBy="owner", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     public List<Payment> getCards() {
         return cards;
@@ -79,8 +77,8 @@ public class Customer extends ModelBase implements Serializable {
         this.carts = carts;
     }    
     
-    @OneToOne(orphanRemoval=true, cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
-    @JoinColumn(name="USER_ID")
+//    @OneToOne(orphanRemoval=true, cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
+//    @JoinColumn(name="USER_ID")
     public PlatformUser getUser() {
         return user;
     }
