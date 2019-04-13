@@ -10,3 +10,7 @@ VALUES('Montreal', '18197894561', 'nb@bb.vv', 'B2B2B2', 'QC', '3 Queen str.', 0,
 INSERT INTO public.contact
 (city, email, phone, postalcode, province, street, version, created_date, updated_date)
 VALUES('Edmonton', '1765849399', 'aaa@bbb.ccc', 'L4L4L4', 'AB', '4 Dead rd.', 0, TIMESTAMP '2019-04-12 07:15:31.123456789', TIMESTAMP '2019-04-12 07:15:31.123456789');
+
+INSERT INTO public.customer
+(firstname, lastname, version, created_date, updated_date, contact_id, user_id)
+VALUES('Anna', 'Shtein', 1, TIMESTAMP '2019-04-12 07:15:31.123456789', TIMESTAMP '2019-04-12 07:15:31.123456789', 1, 1);

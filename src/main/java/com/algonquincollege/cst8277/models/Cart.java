@@ -3,6 +3,7 @@ package com.algonquincollege.cst8277.models;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -34,7 +35,7 @@ public class Cart extends ModelBase implements Serializable {
         this.choices = choices;
     }
   
-
+    @JsonbTransient
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="OWNING_CUST_ID")
     public Customer getCustomer() {
