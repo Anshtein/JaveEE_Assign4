@@ -13,4 +13,4 @@ VALUES('Edmonton', '1765849399', 'aaa@bbb.ccc', 'L4L4L4', 'AB', '4 Dead rd.', 0,
 
 INSERT INTO public.customer
 (firstname, lastname, version, created_date, updated_date, contact_id, user_id)
-VALUES('Anna', 'Shtein', 1, TIMESTAMP '2019-04-12 07:15:31.123456789', TIMESTAMP '2019-04-12 07:15:31.123456789', 1, 1);
+VALUES('Anna', 'Shtein', 1, TIMESTAMP '2019-04-12 07:15:31.123456789', TIMESTAMP '2019-04-12 07:15:31.123456789', null, 1);
