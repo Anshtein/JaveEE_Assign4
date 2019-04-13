@@ -19,8 +19,10 @@ import static com.algonquincollege.cst8277.utils.RestDemoConstants.ADMIN_ROLENAM
 import static com.algonquincollege.cst8277.utils.RestDemoConstants.USER_ROLENAME;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
+import java.security.Principal;
 import java.util.List;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -30,6 +32,7 @@ import javax.json.JsonObjectBuilder;
 import javax.security.enterprise.SecurityContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -48,6 +51,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 
 import com.algonquincollege.cst8277.ejb.SimpleBean;
 import com.algonquincollege.cst8277.models.Customer;
+import com.sun.mail.imap.protocol.Status;
 
 @Path(CUSTOMER_RESOURCE_NAME)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -94,33 +98,35 @@ public class CustomerResource {
     })
     @RolesAllowed(USER_ROLENAME)
     @Path(EMPLOYEE_RESOURCE_PATH_ID_PATH)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response getEmployeeById(@Parameter(description = PRIMARY_KEY_DESC, required = true)
         @PathParam(EMPLOYEE_RESOURCE_PATH_ID_ELEMENT) int id) {
         Response response = null;
-
-        /*
-        if (!sc.isCallerInRole(USER_ROLENAME)) {
+        Principal user = sc.getCallerPrincipal();
+        
+        
+        
+        if (!simpleBean.checkCustomerUsernameId(user.getName(), id)) {
             //TODO - check if specific user is allowed to retrieve the specific employee
-            response = Response.status(Status.FORBIDDEN).entity(GET_EMPLOYEES_OP_403_DESC_JSON_MSG).build();
+            response = Response.status(javax.ws.rs.core.Response.Status.FORBIDDEN).build();
         }
-        else {
-        */
+        else if (simpleBean.checkCustomerUsernameId(user.getName(), id)){
         Customer emp = simpleBean.getCustomerById(id);
+        emp.getUser().setPwHash("*************");
             if (emp == null) {
                 response = Response.status(NOT_FOUND).build();
             }
             else {
                 response = Response.ok(emp).build();
             }
-        /*
         }
-        */
 
         return response;
     }
     
     @POST
-    @Path("/create/{param1}/{param2}")
+    @Path("/{param1}/{param2}")
+    @PermitAll
     @Produces(MediaType.TEXT_PLAIN)
     public Response create(@PathParam("param1") String param1,
                        @PathParam("param2") String param2) {
@@ -129,7 +135,7 @@ public class CustomerResource {
     }
     
     @POST
-    @Path("/create")
+    @Path("/")
     @Produces(MediaType.TEXT_PLAIN)
     public Response createQuery(@QueryParam("param1") String param1,
                        @QueryParam("param2") String param2) {
@@ -138,7 +144,8 @@ public class CustomerResource {
     }
     
     @PUT
-    @Path("/update/{id}/{firstName}/{lastName}")
+    @RolesAllowed(USER_ROLENAME)
+    @Path("/{id}/{firstName}/{lastName}")
     @Produces("application/json")
     public Response updateCustomer(@PathParam("id")int id, @PathParam("firstName") String firstName, @PathParam("lastName") String lastName)
     {
@@ -150,7 +157,8 @@ public class CustomerResource {
     }
   
     @DELETE
-    @Path("/delete/{id}")
+    @RolesAllowed(USER_ROLENAME)
+    @Path("/{id}")
     @Produces("application/json")
     public Response deleteById(@PathParam("id")int id){
        Customer customer = simpleBean.getCustomerById(id);

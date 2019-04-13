@@ -19,15 +19,16 @@ import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import com.algonquincollege.cst8277.models.Customer;
 import com.algonquincollege.cst8277.models.PlatformRole;
 import com.algonquincollege.cst8277.models.PlatformRole_;
+import com.algonquincollege.cst8277.models.PlatformUser;
 
 
 
 @Stateless
 public class SimpleBean {
 
-	@Inject
-	protected BuildUser buildUser;
-	
+    @Inject
+    protected BuildUser buildUser;
+    
     @PersistenceContext(unitName = PU_NAME)
     protected EntityManager em;
 
@@ -47,43 +48,57 @@ public class SimpleBean {
         return em.find(Customer.class, id);
     }
     
+    public boolean checkCustomerUsernameId(String username, int id) {
+        Customer customer = getCustomerById(id);
+        PlatformUser pu = customer.getUser();
+        String customerUsername = pu.getUsername();
+        if(customerUsername.equals(username)) {
+//      if (customerUsername.toUpperCase() == username.toUpperCase()) {
+            return true;
+        }
+        return false;
+        
+    }
+    
     public boolean addCustomer(String firstName, String lastName) {
-    	if (!firstName.isEmpty() && !lastName.isEmpty()) {
-	    	Customer newCustomer = new Customer();
-	    	newCustomer.setFirstName(firstName);
-	    	newCustomer.setLastName(lastName);
-	    	
-	    	em.persist(newCustomer);
-	    	
-	    	String userPassword = "temppwd";
-	    	String customerRole = "customer";
-	    	
-	    	CriteriaBuilder cb = em.getCriteriaBuilder();
-	        CriteriaQuery<PlatformRole> cq = cb.createQuery(PlatformRole.class);
-	        Root<PlatformRole> root = cq.from(PlatformRole.class);       
-	        cq.select(root);
-	        cq.where(cb.equal(root.get(PlatformRole_.roleName), "customer"));
-	        TypedQuery<PlatformRole> tq = em.createQuery(cq);
-	        List<PlatformRole> role = tq.getResultList();  
-	    	
-	    	buildUser.buildUser(firstName+lastName, userPassword, role);
-	    	
-	    	if(em.contains(newCustomer))
-	    		return true;
-	    	else return false;
-    	}
-    	return false;
+        if (!firstName.isEmpty() && !lastName.isEmpty()) {
+            String userPassword = "temppwd";
+            String customerRole = "customer";
+            
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<PlatformRole> cq = cb.createQuery(PlatformRole.class);
+            Root<PlatformRole> root = cq.from(PlatformRole.class);       
+            cq.select(root);
+            cq.where(cb.equal(root.get(PlatformRole_.roleName), "customer"));
+            TypedQuery<PlatformRole> tq = em.createQuery(cq);
+            List<PlatformRole> role = tq.getResultList(); 
+            
+            PlatformUser pu = buildUser.buildUser(firstName+lastName, userPassword, role);
+
+            
+            Customer newCustomer = new Customer();
+            newCustomer.setFirstName(firstName);
+            newCustomer.setLastName(lastName);
+            newCustomer.setUser(pu);
+            
+            em.persist(newCustomer);
+                            
+            if(em.contains(newCustomer))
+                return true;
+            else return false;
+        }
+        return false;
     }
     
     public boolean deleteCustomer(Customer customer) {
-    	if (!em.contains(customer)) {
-    	    customer = em.merge(customer);
-    	}
-    	em.remove(customer);
-    	
-    	if(em.contains(customer))
-    		return false;
-    	else return true;	
+        if (!em.contains(customer)) {
+            customer = em.merge(customer);
+        }
+        em.remove(customer);
+        
+        if(em.contains(customer))
+            return false;
+        else return true;   
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)

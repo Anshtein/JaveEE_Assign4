@@ -53,7 +53,7 @@ public class BuildUser {
     protected Pbkdf2PasswordHash pbAndjPasswordHash;
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void buildUser(String userName, String userPassword, List<PlatformRole> customerRole) {
+    public PlatformUser buildUser(String userName, String userPassword, List<PlatformRole> customerRole) {
         PlatformUser user = jpaHelper.findUserByName(userName);
         if (user == null) {
             user = new PlatformUser();
@@ -77,5 +77,6 @@ public class BuildUser {
             user.setPlatformRoles(platformRoles);
             jpaHelper.savePlatformUser(user);
         }
+		return user;
     }
 }
