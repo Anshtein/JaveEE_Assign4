@@ -3,6 +3,7 @@ package com.algonquincollege.cst8277.models;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -42,7 +43,7 @@ public class Product extends ModelBase implements Serializable {
         this.choice = choice;
     }
 
-
+   // @JsonbTransient
     @ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     @JoinTable(name="CATEGORY_PROD",
     joinColumns=@JoinColumn(name="PROD_ID"),

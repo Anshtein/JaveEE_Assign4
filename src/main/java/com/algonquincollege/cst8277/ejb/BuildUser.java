@@ -14,6 +14,8 @@ import static com.algonquincollege.cst8277.utils.RestDemoConstants.PROPERTY_KEYS
 import static com.algonquincollege.cst8277.utils.RestDemoConstants.PROPERTY_SALTSIZE;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,65 +35,48 @@ import com.algonquincollege.cst8277.security.CustomIdentityStoreJPAHelper;
 
 @Startup
 @Singleton
-public class BuildDefaultAdminUser {
+public class BuildUser {
 
     @Inject
     protected CustomIdentityStoreJPAHelper jpaHelper;
 
-    @Inject
-    @ConfigProperty(name = DEFAULT_ADMIN_USER_PROPNAME, defaultValue = DEFAULT_ADMIN_USER)
-    private String defaultAdminUsername;
+//    @Inject
+//    @ConfigProperty(name = DEFAULT_ADMIN_USER_PROPNAME, defaultValue = DEFAULT_ADMIN_USER)
+//    private String defaultAdminUsername;
 
     //TODO - encrypt value inside microprofile-config.properties
-    @Inject
-    @ConfigProperty(name = DEFAULT_ADMIN_USER_PASSWORD_PROPNAME)
-    private String defaultAdminUserPassword;
+//    @Inject
+//    @ConfigProperty(name = DEFAULT_ADMIN_USER_PASSWORD_PROPNAME)
+//    private String defaultAdminUserPassword;
 
     @Inject
     protected Pbkdf2PasswordHash pbAndjPasswordHash;
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    @PostConstruct
-    public void init() {
-        // build default admin user (if needed)
-        PlatformUser defaultAdminUser = jpaHelper.findUserByName(defaultAdminUsername);
-        if (defaultAdminUser == null) {
-            defaultAdminUser = new PlatformUser();
-            defaultAdminUser.setUsername(defaultAdminUsername);
+    public PlatformUser buildUser(String userName, String userPassword, List<PlatformRole> customerRole) {
+        PlatformUser user = jpaHelper.findUserByName(userName);
+        if (user == null) {
+            user = new PlatformUser();
+            user.setUsername(userName);
             Map<String, String> pbAndjProperties = new HashMap<>();
             pbAndjProperties.put(PROPERTY_ALGORITHM, DEFAULT_PROPERTY_ALGORITHM);
             pbAndjProperties.put(PROPERTY_ITERATIONS, DEFAULT_PROPERTY_ITERATIONS);
             pbAndjProperties.put(PROPERTY_SALTSIZE, DEFAULT_SALT_SIZE);
             pbAndjProperties.put(PROPERTY_KEYSIZE, DEFAULT_KEY_SIZE);
             pbAndjPasswordHash.initialize(pbAndjProperties);
-            String pwHash = pbAndjPasswordHash.generate(defaultAdminUserPassword.toCharArray());
-            defaultAdminUser.setPwHash(pwHash);
+            String pwHash = pbAndjPasswordHash.generate(userPassword.toCharArray());
+            user.setPwHash(pwHash);
 
-            PlatformRole platformRole = new PlatformRole();
-            platformRole.setRoleName(ADMIN_ROLENAME);
-            Set<PlatformRole> platformRoles = defaultAdminUser.getPlatformRoles();
-            platformRoles.add(platformRole);
-            jpaHelper.savePlatformUser(defaultAdminUser);
+//            PlatformRole platformRole = new PlatformRole();
+//            platformRole.setRoleName(customerRole);
+            Set<PlatformRole> platformRoles = new HashSet<PlatformRole>();
+            for (PlatformRole x : customerRole) 
+            	platformRoles.add(x); 
+//            Set<PlatformRole> platformRoles = user.getPlatformRoles();
+//            platformRoles.add(platformRoles);
+            user.setPlatformRoles(platformRoles);
+            jpaHelper.savePlatformUser(user);
         }
-        
-        String customer = "customer";
-        PlatformUser customerUser = jpaHelper.findUserByName(customer);
-        if (customerUser == null) {
-        	customerUser = new PlatformUser();
-        	customerUser.setUsername(defaultAdminUsername);
-            Map<String, String> pbAndjProperties = new HashMap<>();
-            pbAndjProperties.put(PROPERTY_ALGORITHM, DEFAULT_PROPERTY_ALGORITHM);
-            pbAndjProperties.put(PROPERTY_ITERATIONS, DEFAULT_PROPERTY_ITERATIONS);
-            pbAndjProperties.put(PROPERTY_SALTSIZE, DEFAULT_SALT_SIZE);
-            pbAndjProperties.put(PROPERTY_KEYSIZE, DEFAULT_KEY_SIZE);
-            pbAndjPasswordHash.initialize(pbAndjProperties);
-            String pwHash = pbAndjPasswordHash.generate(defaultAdminUserPassword.toCharArray());
-            customerUser.setPwHash(pwHash);
-
-            PlatformRole platformRole = new PlatformRole();
-            platformRole.setRoleName(customer);
-            Set<PlatformRole> platformRoles = defaultAdminUser.getPlatformRoles();
-            platformRoles.add(platformRole);
-        }
+		return user;
     }
 }
