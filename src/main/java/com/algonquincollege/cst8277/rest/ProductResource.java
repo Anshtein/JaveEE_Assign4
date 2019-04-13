@@ -188,17 +188,6 @@ public class ProductResource {
         return response;
     }
 
-    /*@GET
-    @Operation(description = GET_PRODUCT_BY_ID_OP_DESC)
-    @APIResponses({
-        @APIResponse(responseCode = "200", description = GET_PRODUCT_BY_ID_OP_200_DESC),
-        @APIResponse(responseCode = "403", description = GET_PRODUCT_BY_ID_OP_403_DESC),
-        @APIResponse(responseCode = "404", description = GET_PRODUCT_BY_ID_OP_404_DESC)
-    })
-    @RolesAllowed(USER_ROLENAME)
-    @Path(PRODUCT_RESOURCE_PATH_ID_PATH)
-    public Response getCategoryById(@Parameter(description = PRIMARY_KEY_DESC, required = true)
-    @PathParam(PRODUCT_RESOURCE_PATH_ID_ELEMENT) int id) {*/
     @GET
     @Operation(description = GET_PRODUCT_BY_ID_OP_DESC)
     @APIResponses({
