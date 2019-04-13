@@ -29,6 +29,7 @@
     <!-- code properties -->
     <javaee.api.version>8.0</javaee.api.version>
     <javaee.security.version>1.0</javaee.security.version>
+    <maven.war.plugin.version>3.2.2</maven.war.plugin.version>
     <eclipse.microprofile.version>[1.0,2)</eclipse.microprofile.version>
   </properties>
 
