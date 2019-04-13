@@ -20,7 +20,7 @@ public class Contact extends ModelBase implements Serializable {
     protected String city;
     protected String province;
     protected String postalCode;
-    protected Customer customer;
+//    protected Customer customer;
     
     
 
@@ -32,14 +32,14 @@ public class Contact extends ModelBase implements Serializable {
      * Map OneToOne and get the child entity
      * @return Customer customer
      */
-    @OneToOne(orphanRemoval=true, mappedBy="contact", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
-    public Customer getCustomer() {
-        return customer;
-    }
+//    @OneToOne(orphanRemoval=true, mappedBy="contact", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
+//    public Customer getCustomer() {
+//        return customer;
+//    }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
+//    public void setCustomer(Customer customer) {
+//        this.customer = customer;
+//    }
 
     public String getEmail() {
         return email;
