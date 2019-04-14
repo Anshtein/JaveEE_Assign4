@@ -1,3 +1,15 @@
+/********************************************************************egg***m******a**************n************
+ * File: Category.java
+ * Course materials (19W) CST 8277
+ * @author Mike Norman
+ * @author Elena Soukhanov 040871451
+ * @author Ksenia Lopukhina 040892102
+ * @author Svetlana Netchaeva 040858724
+ * @author Anna Shteyngart 040883547
+ * @author Pavel Jilinski 040878295
+ * @date 2019 04
+ *
+ */
 package com.algonquincollege.cst8277.models;
 
 import java.io.Serializable;
@@ -12,19 +24,39 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+/**
+ * The Category class is for accessing, persisting, and managing data
+ * associated with Category entity.
+ * It demonstrates ManyToMany relationship with Product table
+ * through joined table Category_prod
+ */
 @Entity
 @EntityListeners({AuditListener.class})
 public class Category extends ModelBase implements Serializable {
     /** explicit set serialVersionUID */
     private static final long serialVersionUID = 1L;
 
+    /**
+     * name of a category
+     */
     protected String name;
+    /**
+     * list of products
+     */
     protected List<Product> products;
-    
+    /**
+     * default constructor
+     */
     public Category () {
         super();
     }
 
+    /**
+     * getter for the list of products
+     * annotated with ManyToMany to represent relationship with Product table
+     * using an intermediary entity CATEGORY_PROD for the join table
+     * @return list of products
+     */
 
     @JsonbTransient
     @ManyToMany(mappedBy="categories", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
@@ -35,20 +67,33 @@ public class Category extends ModelBase implements Serializable {
         return products;
     }
 
-
+    /**
+     * sets list of products
+     * @param products
+     */
     public void setProduct(List<Product> products) {
         this.products = products;
     }
 
-
+    /**
+     * gets category name
+     * @return String name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * sets category name
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
     
+    /**
+     * returns a unique integer value for the object at runtime
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -57,6 +102,9 @@ public class Category extends ModelBase implements Serializable {
         return result;
     }
 
+    /**
+     * verifies the equality of two objects
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -75,6 +123,9 @@ public class Category extends ModelBase implements Serializable {
         return true;
     }
 
+    /**
+     * returns the string representation of the object
+     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
