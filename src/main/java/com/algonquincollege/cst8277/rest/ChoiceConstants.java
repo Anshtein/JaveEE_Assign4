@@ -6,7 +6,7 @@ public interface ChoiceConstants {
     public static final String SUFFIX_JSON_MSG = "\"}";
 
     public static final String PRIMARY_KEY_DESC = "primary key";
-    public static final String CHOICE_RESOURCE_NAME =  "choice";
+    public static final String CHOICE_RESOURCE_NAME = "choice";
     public static final String CHOICE_RESOURCE_PATH_ID_ELEMENT =  "id";
     public static final String CHOICE_RESOURCE_PATH_ID_PATH =  "/{" + CHOICE_RESOURCE_PATH_ID_ELEMENT + "}";
     
