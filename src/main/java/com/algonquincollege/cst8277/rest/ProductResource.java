@@ -111,17 +111,28 @@ public class ProductResource {
         @APIResponse(responseCode = "404", description = ADD_PRODUCT_OP_404_DESC)
     })
     @RolesAllowed(ADMIN_ROLENAME)
-    public Response addProduct(@Parameter(description = PRODUCT_NAME, required = true)
-    @QueryParam(PRODUCT_RESOURCE_PATH_NAME_ELEMENT) String prodName,
-    @Parameter(description = PRODUCT_PRICE, required = false)
-    @QueryParam(PRODUCT_RESOURCE_PATH_PRICE_ELEMENT) String prodPrice) 
-    {
+    public Response addProduct( @Parameter(description = PRODUCT_NAME, required = true)
+                                @QueryParam(PRODUCT_RESOURCE_PATH_NAME_ELEMENT) String prodName,
+                                @Parameter(description = PRODUCT_PRICE, required = false)
+                                @QueryParam(PRODUCT_RESOURCE_PATH_PRICE_ELEMENT) String prodPrice,
+                                @Parameter(description = CATEGORY_ID, required = false)
+                                @QueryParam(PRODUCT_CATEGORY_RESOURCE_PATH_ID_ELEMENT) String categoryId) {
         Response response = null;
         Product prodWithAddedFields = new Product();
         prodWithAddedFields.setName(prodName);
         
         if(prodPrice != null && !prodPrice.isEmpty())
             prodWithAddedFields.setPrice(Double.parseDouble(prodPrice));
+        
+        if(categoryId != null && !categoryId.isEmpty()) {
+            Category cat = categoryBean.getCategoryById(Integer.parseInt(categoryId));
+            
+            if(cat == null || cat.getId() == 0) {
+                return Response.status(NOT_FOUND).build();
+            }
+            
+            prodWithAddedFields.setCategories(Arrays.asList(cat));
+        }
         
         int id = prodBean.addProduct(prodWithAddedFields);
         response = Response.ok(id).build();
@@ -157,15 +168,18 @@ public class ProductResource {
         if(categoryId != null && !categoryId.isEmpty()) {
             Category cat = categoryBean.getCategoryById(Integer.parseInt(categoryId));
             
-            /**
             //get categories
             List<Category> cats = prodWithUpdatedFields.getCategories();
-            // add to existing categories
-            cats.add(cat);
-            // set categories
-            prodWithUpdatedFields.setCategories(cats);
-            **/
-            prodWithUpdatedFields.setCategories(Arrays.asList(cat));
+
+            if(cats != null && cats.size() > 0) {
+             // add to existing categories
+                cats.add(cat);
+                // set categories
+                prodWithUpdatedFields.setCategories(cats);
+            }
+            else {
+                prodWithUpdatedFields.setCategories(Arrays.asList(cat));
+            }
         }
         
         prodBean.updateProduct(prodWithUpdatedFields);

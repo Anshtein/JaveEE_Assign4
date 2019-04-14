@@ -24,7 +24,7 @@ public class ProductBean {
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public int addProduct(Product prodWithUpdatedFields) {
-        em.persist(prodWithUpdatedFields);
+        em.merge(prodWithUpdatedFields);
         return prodWithUpdatedFields.getId();
     }
     
