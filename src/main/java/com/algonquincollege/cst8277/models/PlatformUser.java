@@ -45,7 +45,7 @@ public class PlatformUser extends ModelBase implements Serializable, Principal {
     protected String username;
     protected String pwHash;
     protected Set<PlatformRole> platformRoles = new HashSet<>();
-    protected Customer customer;
+//    protected Customer customer;
 
     @Override
     public String getName() {
@@ -85,13 +85,13 @@ public class PlatformUser extends ModelBase implements Serializable, Principal {
      * Map OneToOne and get the child entity
      * @return Customer customer
      */
-    @OneToOne(orphanRemoval=true, mappedBy="user", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
-    public Customer getCustomer() {
-        return customer;
-    }
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
+//    @OneToOne(orphanRemoval=true, mappedBy="user", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
+//    public Customer getCustomer() {
+//        return customer;
+//    }
+//    public void setCustomer(Customer customer) {
+//        this.customer = customer;
+//    }
 
     
     

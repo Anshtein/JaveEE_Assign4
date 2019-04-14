@@ -35,7 +35,7 @@ public class Cart extends ModelBase implements Serializable {
         this.choices = choices;
     }
   
-    @JsonbTransient
+//    @JsonbTransient
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="OWNING_CUST_ID")
     public Customer getCustomer() {

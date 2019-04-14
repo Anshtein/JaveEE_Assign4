@@ -19,6 +19,7 @@ package com.algonquincollege.cst8277.models;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -48,17 +49,27 @@ public class Customer extends ModelBase implements Serializable {
     }
 
     //TODO - 1:1 relationship to core entity
-
     @OneToOne(cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
     @JoinColumn(name="CONTACT_ID")
     public Contact getContact() {
 		return contact;
 	}
+    
+  @OneToOne(orphanRemoval=true, cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
+  @JoinColumn(name="USER_ID")
+  public PlatformUser getUser() {
+      return user;
+  }
+
+  public void setUser(PlatformUser user) {
+      this.user = user;
+  }
 
 	public void setContact(Contact contact) {
 		this.contact = contact;
 	}
 	
+	 @JsonbTransient
     @OneToMany(mappedBy="owner", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     public List<Payment> getCards() {
         return cards;
@@ -68,6 +79,7 @@ public class Customer extends ModelBase implements Serializable {
         this.cards = cards;
     }
 
+    @JsonbTransient
     @OneToMany(mappedBy="customer", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     public List<Cart> getCarts() {
         return carts;
@@ -77,15 +89,7 @@ public class Customer extends ModelBase implements Serializable {
         this.carts = carts;
     }    
     
-//    @OneToOne(orphanRemoval=true, cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
-//    @JoinColumn(name="USER_ID")
-    public PlatformUser getUser() {
-        return user;
-    }
 
-    public void setUser(PlatformUser user) {
-        this.user = user;
-    }
 
 	
 

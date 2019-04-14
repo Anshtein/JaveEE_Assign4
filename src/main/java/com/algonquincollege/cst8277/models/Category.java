@@ -3,6 +3,7 @@ package com.algonquincollege.cst8277.models;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -24,10 +25,12 @@ public class Category extends ModelBase implements Serializable {
         super();
     }
 
-    @ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-    @JoinTable(name="CATEGORY_PROD",
-    joinColumns=@JoinColumn(name="CATEGORY_ID"),
-    inverseJoinColumns=@JoinColumn(name="PROD_ID"))    
+
+    @JsonbTransient
+    @ManyToMany(mappedBy="categories", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+//    @JoinTable(name="CATEGORY_PROD",
+//    joinColumns=@JoinColumn(name="CATEGORY_ID"),
+//    inverseJoinColumns=@JoinColumn(name="PROD_ID"))    
     public List<Product> getProduct() {
         return products;
     }
