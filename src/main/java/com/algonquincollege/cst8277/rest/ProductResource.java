@@ -244,7 +244,8 @@ public class ProductResource {
     })
     
     @RolesAllowed(ADMIN_ROLENAME)
-    public Response deleteProductById(@PathParam("id") String id) {
+    public Response deleteProductById(@Parameter(description = PRODUCT_ID, required = true)
+                                      @QueryParam(PRODUCT_RESOURCE_PATH_ID_ELEMENT) String id) {
         Response response = null;
 
         Product product = prodBean.getProductById(Integer.parseInt(id));

@@ -162,7 +162,8 @@ public class CategoryResource {
     })
     
     @RolesAllowed(ADMIN_ROLENAME)
-    public Response deleteCategoryById(@PathParam("id") String id) {
+    public Response deleteCategoryById(@Parameter(description = CATEGORY_ID, required = true)
+                                      @QueryParam(CATEGORY_RESOURCE_PATH_NAME_ELEMENT) String id) {
         Response response = null;
 
         Category category = prodCategoryBean.getCategoryById(Integer.parseInt(id));
