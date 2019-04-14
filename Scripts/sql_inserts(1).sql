@@ -3,8 +3,8 @@ INSERT INTO public.category (name, version, created_date, updated_date) VALUES('
 INSERT INTO public.category (name, version, created_date, updated_date) VALUES('tools', 0, TIMESTAMP '2019-04-09 07:15:31.123456789', TIMESTAMP '2019-04-09 07:15:31.123456789');
 
 INSERT INTO public.product (name, price, version, created_date, updated_date) VALUES('shirt', 10.00, 0, TIMESTAMP '2019-04-09 07:15:31.123456789', TIMESTAMP '2019-04-09 07:15:31.123456789');
-INSERT INTO public.product (name, price, version, created_date, updated_date) VALUES('nails', 3.00, 0, TIMESTAMP '2019-04-09 07:15:31.123456789', TIMESTAMP '2019-04-09 07:15:31.123456789');
-INSERT INTO public.product (name, price, version, created_date, updated_date) VALUES('cup', 1.50, 0, TIMESTAMP '2019-04-09 07:15:31.123456789', TIMESTAMP '2019-04-09 07:15:31.123456789');
+INSERT INTO public.product (name, price, version, created_date, updated_date) VALUES('doll', 3.00, 0, TIMESTAMP '2019-04-09 07:15:31.123456789', TIMESTAMP '2019-04-09 07:15:31.123456789');
+INSERT INTO public.product (name, price, version, created_date, updated_date) VALUES('teddy', 1.50, 0, TIMESTAMP '2019-04-09 07:15:31.123456789', TIMESTAMP '2019-04-09 07:15:31.123456789');
 
 INSERT INTO public.contact(city, email, phone, postalcode, province, street, version, created_date, updated_date)
 VALUES('Ottawa', '16131234567', 'a@b.c', 'K2K2K2', 'ON', '1 Main str.', 0, TIMESTAMP '2019-04-09 07:15:31.123456789', TIMESTAMP '2019-04-09 07:15:31.123456789');
@@ -41,4 +41,17 @@ INSERT INTO public.platform_user_role (ROLE_ID,USER_ID) VALUES (
 2,4);
 INSERT INTO public.platform_user_role (ROLE_ID,USER_ID) VALUES (
 2,5);
+
+INSERT INTO public.category_prod
+(category_id, prod_id)
+VALUES(1, 1);
+INSERT INTO public.category_prod
+(category_id, prod_id)
+VALUES(2, 2);
+INSERT INTO public.category_prod
+(category_id, prod_id)
+VALUES(2, 3);
+
+
+
 

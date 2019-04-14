@@ -29,7 +29,7 @@ public class Payment extends ModelBase implements Serializable {
      * Map ManyToOne and get Employee instance
      * @return
      */
-    @JsonbTransient
+   
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="OWNING_CUST_ID")
     public Customer getOwner() {

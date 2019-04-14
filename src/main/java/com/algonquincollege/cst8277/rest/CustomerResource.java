@@ -83,11 +83,12 @@ public class CustomerResource {
         else {
         */
             List<Customer> emps = simpleBean.getEmployeeList();
-            List<String> names = new ArrayList<>();
-            for (Customer customer : emps) {
-            	names.add(customer.toString());				
-			}
-            response = Response.ok(names).build();
+//            List<String> names = new ArrayList<>();
+//            for (Customer customer : emps) {
+//            	names.add(customer.toString());				
+//			}
+            response = Response.ok(emps).build();
+//            response = Response.ok(names).build();
         /*
         }
         */
@@ -123,7 +124,7 @@ public class CustomerResource {
                 response = Response.status(NOT_FOUND).build();
             }
             else {
-                response = Response.ok(result).build();
+                response = Response.ok(emp).build();
             }
         }
 
