@@ -13,6 +13,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
 import com.algonquincollege.cst8277.models.Category;
+import com.algonquincollege.cst8277.models.Product;
 
 @Stateless
 public class ProductCategoryBean {
@@ -46,7 +47,21 @@ public class ProductCategoryBean {
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void deleteCategoryById(int id) {
         Category category = em.find(Category.class, id);
-        em.remove(category);        
+        
+        if(category != null && category.getId() > 0) {
+            /*em.createNativeQuery("DELETE FROM CHOICE " + 
+                    "WHERE PRODUCT_ID = " + id).executeUpdate();
+            
+            em.createNativeQuery("DELETE FROM PRODUCT " + 
+                    "WHERE ID = " + id).executeUpdate();*/
+            
+            em.createNativeQuery("DELETE FROM CATEGORY_PROD " + 
+                    "WHERE CATEGORY_ID = " + id).executeUpdate();
+                        
+            em.createNativeQuery("DELETE FROM CATEGORY " + 
+                    "WHERE ID = " + id).executeUpdate();
+
+        }       
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)

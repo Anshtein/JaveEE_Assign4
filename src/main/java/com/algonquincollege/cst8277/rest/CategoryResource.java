@@ -28,6 +28,7 @@ import static com.algonquincollege.cst8277.rest.CategoryConstants.CATEGORY_ID;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.DELETE_CATEGORY_BY_ID;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.DELETE_CATEGORY_BY_ID_OP_200;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.DELETE_CATEGORY_BY_ID_OP_403;
+import static com.algonquincollege.cst8277.rest.CategoryConstants.CATEGORY_RESOURCE_PATH_ID_ELEMENT;
 import static com.algonquincollege.cst8277.utils.RestDemoConstants.ADMIN_ROLENAME;
 //import static com.algonquincollege.cst8277.utils.RestDemoConstants.USER_ROLENAME;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
@@ -163,7 +164,7 @@ public class CategoryResource {
     
     @RolesAllowed(ADMIN_ROLENAME)
     public Response deleteCategoryById(@Parameter(description = CATEGORY_ID, required = true)
-                                      @QueryParam(CATEGORY_RESOURCE_PATH_NAME_ELEMENT) String id) {
+                                      @QueryParam(CATEGORY_RESOURCE_PATH_ID_ELEMENT) String id) {
         Response response = null;
 
         Category category = prodCategoryBean.getCategoryById(Integer.parseInt(id));

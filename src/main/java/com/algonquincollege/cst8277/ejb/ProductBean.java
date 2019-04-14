@@ -36,7 +36,18 @@ public class ProductBean {
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void deleteProductById(int id) {
         Product product = em.find(Product.class, id);
-        em.remove(product);        
+        
+        if(product != null && product.getId() > 0) {
+            em.createNativeQuery("DELETE FROM CHOICE " + 
+                    "WHERE PRODUCT_ID = " + id).executeUpdate();
+            
+            em.createNativeQuery("DELETE FROM CATEGORY_PROD " + 
+                    "WHERE PROD_ID = " + id).executeUpdate();
+            
+            em.createNativeQuery("DELETE FROM PRODUCT " + 
+                    "WHERE ID = " + id).executeUpdate();
+
+        }
     }
 
     public List<Product> getProductList() {
