@@ -59,6 +59,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 
 import com.algonquincollege.cst8277.ejb.ProductCategoryBean;
 import com.algonquincollege.cst8277.models.Category;
+import com.algonquincollege.cst8277.models.Product;
 
 @Path(CATEGORY_RESOURCE_NAME)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -118,11 +119,11 @@ public class CategoryResource {
     })
     @RolesAllowed(ADMIN_ROLENAME)
     public Response updateCategory(@Parameter(description = CATEGORY_ID, required = true)
-    @QueryParam(CATEGORY_RESOURCE_PATH_NAME_ELEMENT) String id,
+    @QueryParam(CATEGORY_RESOURCE_PATH_ID_ELEMENT) String id,
     @Parameter(description = CATEGORY_NAME, required = true)
     @QueryParam(CATEGORY_RESOURCE_PATH_NAME_ELEMENT) String categoryName) {
         Response response = null;
-        Category catWithUpdatedFields = new Category();
+        Category catWithUpdatedFields = prodCategoryBean.getCategoryById(Integer.parseInt(id));
         catWithUpdatedFields.setId(Integer.parseInt(id));
         catWithUpdatedFields.setName(categoryName);
         prodCategoryBean.updateCategory(catWithUpdatedFields);
