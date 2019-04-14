@@ -29,7 +29,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
- * Employee class
+ * Customer class
  */
 @Entity
 @EntityListeners({AuditListener.class})
