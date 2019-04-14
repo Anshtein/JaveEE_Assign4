@@ -52,6 +52,13 @@ INSERT INTO public.category_prod
 (category_id, prod_id)
 VALUES(2, 3);
 
+INSERT INTO public.cart (version, created_date, updated_date, owning_cust_id) VALUES(0, TIMESTAMP '2019-04-09 07:15:31.123456789', TIMESTAMP '2019-04-09 07:15:31.123456789', 1);
+INSERT INTO public.cart (version, created_date, updated_date, owning_cust_id) VALUES(0, TIMESTAMP '2019-04-09 07:15:31.123456789', TIMESTAMP '2019-04-09 07:15:31.123456789', 2);
+INSERT INTO public.cart (version, created_date, updated_date, owning_cust_id) VALUES(0, TIMESTAMP '2019-04-09 07:15:31.123456789', TIMESTAMP '2019-04-09 07:15:31.123456789', 3);
+
+INSERT INTO public.choice (quantity, version, created_date, updated_date, cart_id, product_id) VALUES(3, 0, TIMESTAMP '2019-04-09 07:15:31.123456789', TIMESTAMP '2019-04-09 07:15:31.123456789', 1, 1);
+INSERT INTO public.choice (quantity, version, created_date, updated_date, cart_id, product_id) VALUES(100, 0, TIMESTAMP '2019-04-09 07:15:31.123456789', TIMESTAMP '2019-04-09 07:15:31.123456789', 2, 2);
+INSERT INTO public.choice (quantity, version, created_date, updated_date, cart_id, product_id) VALUES(20, 0, TIMESTAMP '2019-04-09 07:15:31.123456789', TIMESTAMP '2019-04-09 07:15:31.123456789', 3, 3);
 
 
 
