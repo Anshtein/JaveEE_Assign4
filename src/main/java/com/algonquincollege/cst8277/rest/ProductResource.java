@@ -3,11 +3,8 @@ package com.algonquincollege.cst8277.rest;
 
 import static com.algonquincollege.cst8277.rest.ProductConstants.PRODUCT_RESOURCE_NAME;
 import static com.algonquincollege.cst8277.rest.ProductConstants.PRODUCT_RESOURCE_PATH_ID_ELEMENT;
-import static com.algonquincollege.cst8277.rest.ProductConstants.PRODUCT_RESOURCE_PATH_ID_PATH;
 import static com.algonquincollege.cst8277.rest.ProductConstants.PRODUCT_RESOURCE_PATH_NAME_ELEMENT;
-import static com.algonquincollege.cst8277.rest.ProductConstants.PRODUCT_RESOURCE_PATH_NAME_PATH;
 import static com.algonquincollege.cst8277.rest.ProductConstants.PRODUCT_RESOURCE_PATH_PRICE_ELEMENT;
-import static com.algonquincollege.cst8277.rest.ProductConstants.PRODUCT_RESOURCE_PATH_PRICE_PATH;
 import static com.algonquincollege.cst8277.rest.ProductConstants.PRODUCT_CATEGORY_RESOURCE_PATH_ID_ELEMENT;
 import static com.algonquincollege.cst8277.rest.ProductConstants.GET_PRODUCT_OP_200_DESC;
 import static com.algonquincollege.cst8277.rest.ProductConstants.GET_PRODUCT_OP_403_DESC;
@@ -37,6 +34,9 @@ import static com.algonquincollege.cst8277.rest.ProductConstants.PRODUCT_ID;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.CATEGORY_ID;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.CATEGORY_RESOURCE_NAME;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.CATEGORY_EXTERNAL_RESOURCE_PATH_ID_ELEMENT;
+import static com.algonquincollege.cst8277.rest.ProductConstants.DELETE_PRODUCT_BY_ID;
+import static com.algonquincollege.cst8277.rest.ProductConstants.DELETE_PRODUCT_BY_ID_OP_200;
+import static com.algonquincollege.cst8277.rest.ProductConstants.DELETE_PRODUCT_BY_ID_OP_403;
 import static com.algonquincollege.cst8277.utils.RestDemoConstants.ADMIN_ROLENAME;
 import static com.algonquincollege.cst8277.utils.RestDemoConstants.USER_ROLENAME;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
@@ -49,6 +49,7 @@ import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.security.enterprise.SecurityContext;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -188,17 +189,6 @@ public class ProductResource {
         return response;
     }
 
-    /*@GET
-    @Operation(description = GET_PRODUCT_BY_ID_OP_DESC)
-    @APIResponses({
-        @APIResponse(responseCode = "200", description = GET_PRODUCT_BY_ID_OP_200_DESC),
-        @APIResponse(responseCode = "403", description = GET_PRODUCT_BY_ID_OP_403_DESC),
-        @APIResponse(responseCode = "404", description = GET_PRODUCT_BY_ID_OP_404_DESC)
-    })
-    @RolesAllowed(USER_ROLENAME)
-    @Path(PRODUCT_RESOURCE_PATH_ID_PATH)
-    public Response getCategoryById(@Parameter(description = PRIMARY_KEY_DESC, required = true)
-    @PathParam(PRODUCT_RESOURCE_PATH_ID_ELEMENT) int id) {*/
     @GET
     @Operation(description = GET_PRODUCT_BY_ID_OP_DESC)
     @APIResponses({
@@ -211,13 +201,6 @@ public class ProductResource {
     public Response getProductById(@PathParam("id") String id) {
         Response response = null;
 
-        /*
-        if (!sc.isCallerInRole(USER_ROLENAME)) {
-            //TODO - check if specific user is allowed to retrieve the category
-            response = Response.status(Status.FORBIDDEN).entity(GET_PRODUCT_OP_403_DESC_JSON_MSG).build();
-        }
-        else {
-         */
         Product prod = prodBean.getProductById(Integer.parseInt(id));
         if (prod == null) {
             response = Response.status(NOT_FOUND).build();
@@ -225,9 +208,6 @@ public class ProductResource {
         else {
             response = Response.ok(prod).build();
         }
-        /*
-        }
-         */
 
         return response;
     }
@@ -252,6 +232,29 @@ public class ProductResource {
         
         response = Response.ok(prods).build();
 
+        return response;
+    }
+    
+    @DELETE
+    @Operation(description = DELETE_PRODUCT_BY_ID)
+    @APIResponses({
+        @APIResponse(responseCode = "200", description = DELETE_PRODUCT_BY_ID_OP_200),
+        @APIResponse(responseCode = "403", description = DELETE_PRODUCT_BY_ID_OP_403),
+        @APIResponse(responseCode = "404", description = GET_PRODUCT_BY_ID_OP_404_DESC)
+    })
+    
+    @RolesAllowed(ADMIN_ROLENAME)
+    public Response deleteProductById(@PathParam("id") String id) {
+        Response response = null;
+
+        Product product = prodBean.getProductById(Integer.parseInt(id));
+        if (product == null) {
+            response = Response.status(NOT_FOUND).build();
+        }
+        else {
+            prodBean.deleteProductById(Integer.parseInt(id));
+            response = Response.ok(product).build();
+        }
         return response;
     }
 

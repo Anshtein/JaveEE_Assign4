@@ -1,10 +1,8 @@
 package com.algonquincollege.cst8277.rest;
 
 import static com.algonquincollege.cst8277.rest.CategoryConstants.CATEGORY_RESOURCE_NAME;
-import static com.algonquincollege.cst8277.rest.CategoryConstants.CATEGORY_RESOURCE_PATH_ID_ELEMENT;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.CATEGORY_RESOURCE_PATH_ID_PATH;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.CATEGORY_RESOURCE_PATH_NAME_ELEMENT;
-import static com.algonquincollege.cst8277.rest.CategoryConstants.CATEGORY_RESOURCE_PATH_NAME_PATH;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.GET_CATEGORY_OP_200_DESC;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.GET_CATEGORY_OP_403_DESC;
 //import static com.algonquincollege.cst8277.rest.CategoryConstants.GET_CATEGORY_OP_403_DESC_JSON_MSG;
@@ -17,12 +15,10 @@ import static com.algonquincollege.cst8277.rest.CategoryConstants.UPDATE_CATEGOR
 //import static com.algonquincollege.cst8277.rest.CategoryConstants.UPDATE_CATEGORY_OP_403_JSON_MSG;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.UPDATE_CATEGORY_OP_404_DESC;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.UPDATE_CATEGORY_OP_DESC;
-import static com.algonquincollege.cst8277.rest.CategoryConstants.UPDATE_CATEGORY_BY_ID;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.GET_CATEGORY_BY_ID_OP_200_DESC;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.GET_CATEGORY_BY_ID_OP_403_DESC;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.GET_CATEGORY_BY_ID_OP_404_DESC;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.GET_CATEGORY_BY_ID_OP_DESC;
-import static com.algonquincollege.cst8277.rest.CategoryConstants.PRIMARY_KEY_DESC;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.ADD_CATEGORY_OP_DESC;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.ADD_CATEGORY_OP_200_DESC;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.ADD_CATEGORY_OP_403_DESC;
@@ -174,6 +170,7 @@ public class CategoryResource {
             response = Response.status(NOT_FOUND).build();
         }
         else {
+            prodCategoryBean.deleteCategoryById(Integer.parseInt(id));
             response = Response.ok(category).build();
         }
         return response;
