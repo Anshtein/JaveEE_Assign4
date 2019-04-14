@@ -14,7 +14,6 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 
 import com.algonquincollege.cst8277.models.Customer;
 import com.algonquincollege.cst8277.models.PlatformRole;
@@ -32,17 +31,13 @@ public class SimpleBean {
     @PersistenceContext(unitName = PU_NAME)
     protected EntityManager em;
 
-    public List<Customer> getEmployeeList() {
+    public List<Customer> getCustomerList() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Customer> cq = cb.createQuery(Customer.class);
         cq.select(cq.from(Customer.class));
         return em.createQuery(cq).getResultList();
     }
 
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void updateEmployee(Customer empWithUpdatedFields) {
-        em.merge(empWithUpdatedFields);
-    }
 
     public Customer getCustomerById(int id) {
         return em.find(Customer.class, id);
@@ -53,7 +48,6 @@ public class SimpleBean {
         PlatformUser pu = customer.getUser();
         String customerUsername = pu.getUsername();
         if(customerUsername.equals(username)) {
-//      if (customerUsername.toUpperCase() == username.toUpperCase()) {
             return true;
         }
         return false;

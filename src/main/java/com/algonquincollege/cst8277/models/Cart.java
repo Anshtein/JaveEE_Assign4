@@ -26,6 +26,7 @@ public class Cart extends ModelBase implements Serializable {
         super();
     }
     
+    @JsonbTransient
     @OneToMany(mappedBy="cart", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     public List<Choice> getChoices() {
         return choices;
