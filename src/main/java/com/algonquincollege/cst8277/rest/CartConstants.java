@@ -1,7 +1,5 @@
 package com.algonquincollege.cst8277.rest;
 
-import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
-
 public interface CartConstants {
 
     public static final String PREFIX_JSON_MSG = "{\"message\":\"";
