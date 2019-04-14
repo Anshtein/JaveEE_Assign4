@@ -29,10 +29,7 @@ import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-<<<<<<< HEAD
-=======
 import com.algonquincollege.cst8277.models.Customer;
->>>>>>> master
 import com.algonquincollege.cst8277.models.PlatformRole;
 import com.algonquincollege.cst8277.models.PlatformUser;
 import com.algonquincollege.cst8277.security.CustomIdentityStoreJPAHelper;
@@ -83,4 +80,6 @@ public class BuildUser {
         }
 		return user;
     }
+    
+       
 }
