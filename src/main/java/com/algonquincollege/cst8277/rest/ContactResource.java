@@ -1,3 +1,14 @@
+/********************************************************************egg***m******a**************n************
+ * File: ContactResource.java
+ * Course materials (19W) CST 8277
+ * @author Elena Soukhanov 040871451
+ * @author Ksenia Lopukhina 040892102
+ * @author Svetlana Netchaeva 040858724
+ * @author Anna Shteyngart 040883547
+ * @author Pavel Jilinski 040878295
+ * @date 2019 04
+ *
+ */
 package com.algonquincollege.cst8277.rest;
 
 import javax.annotation.security.PermitAll;
@@ -61,21 +72,43 @@ import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import java.security.Principal;
 import java.util.List;
 
-
+/**
+ * Resource class for Contact entity
+ * annotated with Path, accepted and produced media type (json format)
+ * 
+ * method annotations describing:
+ * response to HTTP request
+ * describes a sinble API operation on a path
+ * error messages in case of network or other problems
+ * security role permitted to access this method
+ */
 @Path(CONTACT_RESOURCE_NAME)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ContactResource {
     
+    /**
+     * dependency on ContactBean ejb
+     */
     @EJB
     protected ContactBean contactBean;
     
+    /**
+     * dependency on SimpleBean ejb
+     */
     @EJB
     protected SimpleBean simpleBean;
     
+    /**
+     * injected SecurityContext
+     */
     @Inject
     protected SecurityContext sc;
     
+    /**
+     * finds all contacts
+     * @return List of contacts
+     */
     @GET
     @Operation(description = GET_CONTACTS_OP_DESC)
     @APIResponses({
@@ -93,6 +126,11 @@ public class ContactResource {
         return response;
     }
     
+    /**
+     * finds contact by customer id
+     * @param id
+     * @return Response response
+     */
     @GET
     @Operation(description = GET_CONTACT_BY_ID_OP_DESC)
     @APIResponses({
@@ -117,7 +155,16 @@ public class ContactResource {
         return response;
     }
     
-    
+    /**
+     * creates contact
+     * @param city
+     * @param email
+     * @param phone
+     * @param postalCode
+     * @param province
+     * @param street
+     * @return Response response
+     */
     @POST
     @Path("/{city}/{email}/{phone}/{postalCode}/{province}/{street}")
     @PermitAll
@@ -130,6 +177,12 @@ public class ContactResource {
         return Response.status(200).entity(output).build();
     }
     
+    /**
+     * adds new contact to a customer
+     * @param customerid
+     * @param contactid
+     * @return Response response
+     */
     @PUT
     @RolesAllowed(USER_ROLENAME)
     @Path("/{customerid}/{contactid}")
@@ -141,6 +194,17 @@ public class ContactResource {
     	return Response.ok(updated).build();
     }
     
+    /**
+     * updates a contact
+     * @param id
+     * @param city
+     * @param email
+     * @param phone
+     * @param postalCode
+     * @param province
+     * @param street
+     * @return Response response
+     */
     @PUT
     @Path("/{id}/{city}/{email}/{phone}/{postalCode}/{province}/{street}")
     @PermitAll
@@ -153,6 +217,11 @@ public class ContactResource {
         return Response.status(200).entity(output).build();
     }
     
+    /**
+     * deletes contact by customer id
+     * @param id
+     * @return Response response
+     */
     @DELETE
     @RolesAllowed(USER_ROLENAME)
     @Path("/{id}")
