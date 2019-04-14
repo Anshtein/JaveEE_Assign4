@@ -20,6 +20,7 @@ import static com.algonquincollege.cst8277.utils.RestDemoConstants.USER_ROLENAME
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.security.PermitAll;
@@ -82,7 +83,11 @@ public class CustomerResource {
         else {
         */
             List<Customer> emps = simpleBean.getEmployeeList();
-            response = Response.ok(emps).build();
+            List<String> names = new ArrayList<>();
+            for (Customer customer : emps) {
+            	names.add(customer.toString());				
+			}
+            response = Response.ok(names).build();
         /*
         }
         */
@@ -113,11 +118,12 @@ public class CustomerResource {
         else if (simpleBean.checkCustomerUsernameId(user.getName(), id)){
         Customer emp = simpleBean.getCustomerById(id);
         emp.getUser().setPwHash("*************");
+        String result = emp.toString();
             if (emp == null) {
                 response = Response.status(NOT_FOUND).build();
             }
             else {
-                response = Response.ok(emp).build();
+                response = Response.ok(result).build();
             }
         }
 
