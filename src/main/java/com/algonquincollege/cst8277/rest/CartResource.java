@@ -1,3 +1,13 @@
+/********************************************************************egg***m******a**************n************
+ * File: CartResource.java
+ * Course materials (19W) CST 8277
+ * @author Elena Soukhanov 040871451
+ * @author Ksenia Lopukhina 040892102
+ * @author Svetlana Netchaeva 040858724
+ * @author Anna Shteyngart 040883547
+ * @author Pavel Jilinski 040878295
+ * @date 2019 04
+ */
 package com.algonquincollege.cst8277.rest;
 
 import static com.algonquincollege.cst8277.rest.CartConstants.CART_RESOURCE_NAME;
@@ -18,7 +28,6 @@ import static com.algonquincollege.cst8277.rest.CartConstants.ADD_CART_OP_DESC;
 import static com.algonquincollege.cst8277.rest.CartConstants.ADD_CART_OP_200_DESC;
 import static com.algonquincollege.cst8277.rest.CartConstants.ADD_CART_OP_403_DESC; 
 import static com.algonquincollege.cst8277.rest.CartConstants.ADD_CART_OP_404_DESC;
-
 import static com.algonquincollege.cst8277.utils.RestDemoConstants.ADMIN_ROLENAME;
 import static com.algonquincollege.cst8277.utils.RestDemoConstants.USER_ROLENAME;
 
@@ -49,23 +58,51 @@ import com.algonquincollege.cst8277.ejb.SimpleBean;
 import com.algonquincollege.cst8277.models.Cart;
 import com.algonquincollege.cst8277.models.Customer;
 
+/**
+ * Resource class for Cart entity
+ * annotated with Path, accepted and produced media type (json format)
+ * 
+ * method annotations describing:
+ * response to HTTP request
+ * describes a sinble API operation on a path
+ * error messages in case of network or other problems
+ * security role permitted to access this method
+ */
 @Path(CART_RESOURCE_NAME)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CartResource {
 
+    /**
+     * dependency on CartBean ejb
+     */
     @EJB
     protected CartBean cartBean;
+    /**
+     * dependency on SimpleBean ejb
+     */
+    @EJB
+    protected SimpleBean customerBean;
     
+    /**
+     * dependency on ChoiceBean ejb
+     */
     @EJB
     protected SimpleBean customerBean;
     
     @EJB
     protected ChoiceBean choiceBean;
 
+    /**
+     * injected SecurityContext
+     */
     @Inject
     protected SecurityContext sc;
 
+    /**
+     * finds all carts
+     * @return Response response
+     */
     @GET
     @Operation(description = GET_CART_OP_DESC)
     @APIResponses({
@@ -81,7 +118,11 @@ public class CartResource {
         response = Response.ok(carts).build();
         return response;
     }
-    
+    /**
+     * adds a new cart
+     * @param custId
+     * @return Response response
+     */
     @POST
     @Path("/{custId}")
     @Operation(description = ADD_CART_OP_DESC)
@@ -101,7 +142,12 @@ public class CartResource {
         response = Response.ok(id).build();
         return response;
     }
-    
+    /**
+     * updates a cart
+     * @param id
+     * @param custId
+     * @return Response response
+     */
     @PUT
     @Operation(description = UPDATE_CART_OP_DESC)
     @Path("/{id}/{custId}")
@@ -120,8 +166,14 @@ public class CartResource {
         cartBean.updateCart(updatedCart);
         response = Response.ok().build();
         return response;
-    }     
+    }
+
     
+    /**
+     * finds cart by cart id
+     * @param id
+     * @return Response response
+     */
     @GET
     @Operation(description = GET_CART_BY_ID_OP_DESC)
     @APIResponses({
@@ -137,6 +189,21 @@ public class CartResource {
         List<Cart> carts = cartBean.getCartsByCustomerId(id);
         response = Response.ok(carts).build();
         return response;
+    }
+
+    /**
+     * finds Cart by customer id
+     * @param id
+     * @return Response response
+     */
+    @DELETE
+    @RolesAllowed(USER_ROLENAME)
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteById(@PathParam("id")int id){
+        Cart deletedCart = cartBean.getCartById(id);
+       boolean output = cartBean.deleteCart(deletedCart);
+       return Response.status(200).entity(output).build();
     }
     
     @DELETE

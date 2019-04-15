@@ -1,5 +1,17 @@
+/********************************************************************egg***m******a**************n************
+ * File: ProductConstants.java
+ * Course materials (19W) CST 8277
+ * @author Elena Soukhanov 040871451
+ * @author Ksenia Lopukhina 040892102
+ * @author Svetlana Netchaeva 040858724
+ * @author Anna Shteyngart 040883547
+ * @author Pavel Jilinski 040878295
+ * @date 2019 04
+ */
 package com.algonquincollege.cst8277.rest;
-
+/**
+ * interface containing string constants related to Product
+ */
 public interface ProductConstants {
 
     public static final String PREFIX_JSON_MSG = "{\"message\":\"";
@@ -9,7 +21,6 @@ public interface ProductConstants {
     public static final String PRODUCT_NAME = "product name";
     public static final String PRODUCT_ID = "product id";
     public static final String PRODUCT_PRICE = "product price";
-    //TODO go through and define or modify constants
     public static final String PRODUCT_RESOURCE_NAME = "product";
     public static final String PRODUCT_RESOURCE_PATH_ID_ELEMENT = "id";
     public static final String PRODUCT_RESOURCE_PATH_NAME_ELEMENT = "name";

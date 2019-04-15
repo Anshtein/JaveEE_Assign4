@@ -1,3 +1,14 @@
+/********************************************************************egg***m******a**************n************
+ * File: CategoryResource.java
+ * Course materials (19W) CST 8277
+ * @author Elena Soukhanov 040871451
+ * @author Ksenia Lopukhina 040892102
+ * @author Svetlana Netchaeva 040858724
+ * @author Anna Shteyngart 040883547
+ * @author Pavel Jilinski 040878295
+ * @date 2019 04
+ */
+
 package com.algonquincollege.cst8277.rest;
 
 import static com.algonquincollege.cst8277.rest.CategoryConstants.CATEGORY_RESOURCE_NAME;
@@ -61,17 +72,38 @@ import com.algonquincollege.cst8277.ejb.ProductCategoryBean;
 import com.algonquincollege.cst8277.models.Category;
 import com.algonquincollege.cst8277.models.Product;
 
+
+/**
+ * Resource class for Category entity
+ * annotated with Path, accepted and produced media type (json format)
+ * 
+ * method annotations describing:
+ * response to HTTP request
+ * describes a sinble API operation on a path
+ * error messages in case of network or other problems
+ * security role permitted to access this method
+ */
 @Path(CATEGORY_RESOURCE_NAME)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CategoryResource {
 
+    /**
+     * dependency on ProductCategoryBean ejb
+     */
     @EJB
     protected ProductCategoryBean prodCategoryBean;
 
+    /**
+     * injected SecurityContext
+     */
     @Inject
     protected SecurityContext sc;
 
+    /**
+     * finds all categories
+     * @return Response response
+     */
     @GET
     @Operation(description = GET_CATEGORY_OP_DESC)
     @APIResponses({
@@ -89,6 +121,11 @@ public class CategoryResource {
         return response;
     }
 
+    /**
+     * adds new category
+     * @param categoryName
+     * @return Response response
+     */
     @POST
     @Operation(description = ADD_CATEGORY_OP_DESC)
     @APIResponses({
@@ -110,6 +147,12 @@ public class CategoryResource {
         return response;
     }
 
+    /**
+     * updates category
+     * @param id
+     * @param categoryName
+     * @return Response response
+     */
     @PUT
     @Operation(description = UPDATE_CATEGORY_OP_DESC)
     @APIResponses({
@@ -132,6 +175,11 @@ public class CategoryResource {
         return response;
     }
 
+    /**
+     * get a category by id
+     * @param id
+     * @return Response response
+     */
     @GET
     @Operation(description = GET_CATEGORY_BY_ID_OP_DESC)
     @APIResponses({
@@ -155,6 +203,11 @@ public class CategoryResource {
         return response;
     }
 
+    /**
+     * deletes a category
+     * @param id
+     * @return Response response
+     */
     @DELETE
     @Operation(description = DELETE_CATEGORY_BY_ID)
     @APIResponses({

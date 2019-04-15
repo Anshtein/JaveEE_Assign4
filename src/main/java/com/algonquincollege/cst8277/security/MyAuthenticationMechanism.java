@@ -1,3 +1,14 @@
+/********************************************************************egg***m******a**************n************
+ * File: MyAuthenticationMechanism.java
+ * Course materials (19W) CST 8277
+ * @author Mike Norman
+ * @author Elena Soukhanov 040871451
+ * @author Ksenia Lopukhina 040892102
+ * @author Svetlana Netchaeva 040858724
+ * @author Anna Shteyngart 040883547
+ * @author Pavel Jilinski 040878295
+ * @date 2019 04
+ */
 package com.algonquincollege.cst8277.security;
 
 import static javax.security.enterprise.identitystore.CredentialValidationResult.Status.VALID;
@@ -21,12 +32,21 @@ import javax.ws.rs.core.HttpHeaders;
 
 import org.glassfish.soteria.WrappingCallerPrincipal;
 
+/**
+ * class responsible for validating http request
+ */
 @ApplicationScoped
 public class MyAuthenticationMechanism implements HttpAuthenticationMechanism {
 
+    /**
+     * IdentityStore injection
+     */
     @Inject
     private IdentityStore identityStore;
 
+    /**
+     * validates http request
+     */
     @Override
     public AuthenticationStatus validateRequest(HttpServletRequest request, HttpServletResponse response, HttpMessageContext httpMessageContext) throws AuthenticationException {
 
