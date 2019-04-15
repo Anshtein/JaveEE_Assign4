@@ -3,9 +3,7 @@ package com.algonquincollege.cst8277.models;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
-import java.lang.invoke.MethodHandles;
 import java.util.List;
 
 import javax.persistence.EntityManager;
