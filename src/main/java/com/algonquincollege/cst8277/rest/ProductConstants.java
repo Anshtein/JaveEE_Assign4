@@ -45,4 +45,8 @@ public interface ProductConstants {
     public static final String ADD_PRODUCT_OP_200_DESC = "Successful, adding products";
     public static final String ADD_PRODUCT_OP_403_DESC = "Only admin's can add products";
     public static final String ADD_PRODUCT_OP_404_DESC = "Could not add product";
+    
+    public static final String DELETE_PRODUCT_BY_ID = "Removes product by id";
+    public static final String DELETE_PRODUCT_BY_ID_OP_200 = "Successful, deleting defined product";
+    public static final String DELETE_PRODUCT_BY_ID_OP_403 = "Only admin can delete defined product";
 }
