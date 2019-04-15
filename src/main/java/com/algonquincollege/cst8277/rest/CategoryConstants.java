@@ -1,5 +1,19 @@
+/********************************************************************egg***m******a**************n************
+ * File: CategoryConstants.java
+ * Course materials (19W) CST 8277
+ * @author Elena Soukhanov 040871451
+ * @author Ksenia Lopukhina 040892102
+ * @author Svetlana Netchaeva 040858724
+ * @author Anna Shteyngart 040883547
+ * @author Pavel Jilinski 040878295
+ * @date 2019 04
+ *
+ */
 package com.algonquincollege.cst8277.rest;
 
+/**
+ * interface containing string constants related to Category
+ */
 public interface CategoryConstants {
 
     public static final String PREFIX_JSON_MSG = "{\"message\":\"";
@@ -8,7 +22,6 @@ public interface CategoryConstants {
     public static final String PRIMARY_KEY_DESC = "primary key";
     public static final String CATEGORY_NAME = "category name";
     public static final String CATEGORY_ID = "category id";
-    //TODO go through and define or modify constants
     public static final String CATEGORY_RESOURCE_NAME = "category";
     public static final String CATEGORY_RESOURCE_PATH_ID_ELEMENT = "id";
     public static final String CATEGORY_EXTERNAL_RESOURCE_PATH_ID_ELEMENT = "categoryId";

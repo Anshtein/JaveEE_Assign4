@@ -1,3 +1,14 @@
+/********************************************************************egg***m******a**************n************
+ * File: CartResource.java
+ * Course materials (19W) CST 8277
+ * @author Elena Soukhanov 040871451
+ * @author Ksenia Lopukhina 040892102
+ * @author Svetlana Netchaeva 040858724
+ * @author Anna Shteyngart 040883547
+ * @author Pavel Jilinski 040878295
+ * @date 2019 04
+ *
+ */
 package com.algonquincollege.cst8277.rest;
 
 import static com.algonquincollege.cst8277.rest.CartConstants.CART_RESOURCE_NAME;
@@ -66,20 +77,42 @@ import com.algonquincollege.cst8277.ejb.ChoiceBean;
 import com.algonquincollege.cst8277.models.Cart;
 import com.algonquincollege.cst8277.models.Contact;
 
+/**
+ * Resource class for Cart entity
+ * annotated with Path, accepted and produced media type (json format)
+ * 
+ * method annotations describing:
+ * response to HTTP request
+ * describes a sinble API operation on a path
+ * error messages in case of network or other problems
+ * security role permitted to access this method
+ */
 @Path(CART_RESOURCE_NAME)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CartResource {
 
+    /**
+     * dependency on CartBean ejb
+     */
     @EJB
     protected CartBean cartBean;
-    
+    /**
+     * dependency on ChoiceBean ejb
+     */
     @EJB
     protected ChoiceBean choiceBean;
 
+    /**
+     * injected SecurityContext
+     */
     @Inject
     protected SecurityContext sc;
 
+    /**
+     * finds all carts
+     * @return Response response
+     */
     @GET
     @Operation(description = GET_CART_OP_DESC)
     @APIResponses({
@@ -94,7 +127,11 @@ public class CartResource {
         response = Response.ok(carts).build();
         return response;
     }
-    
+    /**
+     * adds a new cart
+     * @param custId
+     * @return Response response
+     */
     @POST
     @Operation(description = ADD_CART_OP_DESC)
     @APIResponses({      
@@ -114,7 +151,12 @@ public class CartResource {
         response = Response.ok(id).build();
         return response;
     }
-    
+    /**
+     * updates a cart
+     * @param id
+     * @param custId
+     * @return Response response
+     */
     @PUT
     @Operation(description = UPDATE_CART_OP_DESC)
     @APIResponses({
@@ -135,7 +177,12 @@ public class CartResource {
         response = Response.ok().build();
         return response;
     }
-      
+    
+    /**
+     * finds cart by cart id
+     * @param id
+     * @return Response response
+     */
     @GET
     @Operation(description = GET_CART_BY_ID_OP_DESC)
     @APIResponses({
@@ -154,10 +201,13 @@ public class CartResource {
         else {
             response = Response.ok(cart).build();
         }
-      //TODO - check if specific user is allowed to retrieve the specific cart!!!!!!!!!!!!!!!!!
         return response;
     }
-    
+    /**
+     * finds Cart by customer id
+     * @param id
+     * @return Response response
+     */
     @GET
     @Operation(description = GET_CART_BY_ID_OP_DESC)
     @APIResponses({

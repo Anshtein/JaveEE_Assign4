@@ -1,3 +1,14 @@
+/********************************************************************egg***m******a**************n************
+ * File: ProductResource.java
+ * Course materials (19W) CST 8277
+ * @author Elena Soukhanov 040871451
+ * @author Ksenia Lopukhina 040892102
+ * @author Svetlana Netchaeva 040858724
+ * @author Anna Shteyngart 040883547
+ * @author Pavel Jilinski 040878295
+ * @date 2019 04
+ *
+ */
 package com.algonquincollege.cst8277.rest;
 
 
@@ -70,21 +81,43 @@ import com.algonquincollege.cst8277.ejb.ProductCategoryBean;
 import com.algonquincollege.cst8277.models.Category;
 import com.algonquincollege.cst8277.models.Product; 
 
-
+/**
+ * Resource class for Product entity
+ * annotated with Path, accepted and produced media type (json format)
+ * 
+ * method annotations describing:
+ * response to HTTP request
+ * describes a sinble API operation on a path
+ * error messages in case of network or other problems
+ * security role permitted to access this method
+ */
 @Path(PRODUCT_RESOURCE_NAME)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ProductResource {
 
+    /**
+     * dependency on ProductBean ejb
+     */
     @EJB
     protected ProductBean prodBean;
-    
+
+    /**
+     * dependency on ProductCategoryBean ejb
+     */
     @EJB
     protected ProductCategoryBean categoryBean;
 
+    /**
+     * injected SecurityContext
+     */
     @Inject
     protected SecurityContext sc;
 
+    /**
+     * finds all products
+     * @return Response response
+     */
     @GET
     @Operation(description = GET_PRODUCT_OP_DESC)
     @APIResponses({
@@ -102,44 +135,59 @@ public class ProductResource {
         return response;
     }
 
+    /**
+     * adds a new product
+     * @param prodName
+     * @param prodPrice
+     * @param categoryId
+     * @return Response response
+     */
     @POST
     @Operation(description = ADD_PRODUCT_OP_DESC)
     @APIResponses({
-       
+
         @APIResponse(responseCode = "200", description = ADD_PRODUCT_OP_200_DESC),
         @APIResponse(responseCode = "403", description = ADD_PRODUCT_OP_403_DESC),
         @APIResponse(responseCode = "404", description = ADD_PRODUCT_OP_404_DESC)
     })
     @RolesAllowed(ADMIN_ROLENAME)
     public Response addProduct( @Parameter(description = PRODUCT_NAME, required = true)
-                                @QueryParam(PRODUCT_RESOURCE_PATH_NAME_ELEMENT) String prodName,
-                                @Parameter(description = PRODUCT_PRICE, required = false)
-                                @QueryParam(PRODUCT_RESOURCE_PATH_PRICE_ELEMENT) String prodPrice,
-                                @Parameter(description = CATEGORY_ID, required = false)
-                                @QueryParam(PRODUCT_CATEGORY_RESOURCE_PATH_ID_ELEMENT) String categoryId) {
+    @QueryParam(PRODUCT_RESOURCE_PATH_NAME_ELEMENT) String prodName,
+    @Parameter(description = PRODUCT_PRICE, required = false)
+    @QueryParam(PRODUCT_RESOURCE_PATH_PRICE_ELEMENT) String prodPrice,
+    @Parameter(description = CATEGORY_ID, required = false)
+    @QueryParam(PRODUCT_CATEGORY_RESOURCE_PATH_ID_ELEMENT) String categoryId) {
         Response response = null;
         Product prodWithAddedFields = new Product();
         prodWithAddedFields.setName(prodName);
-        
+
         if(prodPrice != null && !prodPrice.isEmpty())
             prodWithAddedFields.setPrice(Double.parseDouble(prodPrice));
-        
+
         if(categoryId != null && !categoryId.isEmpty()) {
             Category cat = categoryBean.getCategoryById(Integer.parseInt(categoryId));
-            
+
             if(cat == null || cat.getId() == 0) {
                 return Response.status(NOT_FOUND).build();
             }
-            
+
             prodWithAddedFields.setCategories(Arrays.asList(cat));
         }
-        
+
         int id = prodBean.addProduct(prodWithAddedFields);
         response = Response.ok(id).build();
 
         return response;
     }
 
+    /**
+     * updates a product
+     * @param id
+     * @param prodName
+     * @param prodPrice
+     * @param categoryId
+     * @return Response response
+     */
     @PUT
     @Operation(description = UPDATE_PRODUCT_OP_DESC)
     @APIResponses({
@@ -149,30 +197,30 @@ public class ProductResource {
     })
     @RolesAllowed(ADMIN_ROLENAME)
     public Response updateProduct(@Parameter(description = PRODUCT_ID, required = true)
-                                    @QueryParam(PRODUCT_RESOURCE_PATH_ID_ELEMENT) String id,
-                                    @Parameter(description = PRODUCT_NAME, required = false)
-                                    @QueryParam(PRODUCT_RESOURCE_PATH_NAME_ELEMENT) String prodName,
-                                    @Parameter(description = PRODUCT_PRICE, required = false)
-                                    @QueryParam(PRODUCT_RESOURCE_PATH_PRICE_ELEMENT) String prodPrice,
-                                    @Parameter(description = CATEGORY_ID, required = false)
-                                    @QueryParam(PRODUCT_CATEGORY_RESOURCE_PATH_ID_ELEMENT) String categoryId) {
+    @QueryParam(PRODUCT_RESOURCE_PATH_ID_ELEMENT) String id,
+    @Parameter(description = PRODUCT_NAME, required = false)
+    @QueryParam(PRODUCT_RESOURCE_PATH_NAME_ELEMENT) String prodName,
+    @Parameter(description = PRODUCT_PRICE, required = false)
+    @QueryParam(PRODUCT_RESOURCE_PATH_PRICE_ELEMENT) String prodPrice,
+    @Parameter(description = CATEGORY_ID, required = false)
+    @QueryParam(PRODUCT_CATEGORY_RESOURCE_PATH_ID_ELEMENT) String categoryId) {
         Response response = null;
         Product prodWithUpdatedFields = prodBean.getProductById(Integer.parseInt(id));
-        
+
         if(prodName != null && !prodName.isEmpty())
             prodWithUpdatedFields.setName(prodName);
-        
+
         if(prodPrice != null && !prodPrice.isEmpty())
             prodWithUpdatedFields.setPrice(Double.parseDouble(prodPrice));
-        
+
         if(categoryId != null && !categoryId.isEmpty()) {
             Category cat = categoryBean.getCategoryById(Integer.parseInt(categoryId));
-            
+
             //get categories
             List<Category> cats = prodWithUpdatedFields.getCategories();
 
             if(cats != null && cats.size() > 0) {
-             // add to existing categories
+                // add to existing categories
                 cats.add(cat);
                 // set categories
                 prodWithUpdatedFields.setCategories(cats);
@@ -181,24 +229,19 @@ public class ProductResource {
                 prodWithUpdatedFields.setCategories(Arrays.asList(cat));
             }
         }
-        
+
         prodBean.updateProduct(prodWithUpdatedFields);
         response = Response.ok().build();
 
         return response;
     }
 
-    /*@GET
-    @Operation(description = GET_PRODUCT_BY_ID_OP_DESC)
-    @APIResponses({
-        @APIResponse(responseCode = "200", description = GET_PRODUCT_BY_ID_OP_200_DESC),
-        @APIResponse(responseCode = "403", description = GET_PRODUCT_BY_ID_OP_403_DESC),
-        @APIResponse(responseCode = "404", description = GET_PRODUCT_BY_ID_OP_404_DESC)
-    })
-    @RolesAllowed(USER_ROLENAME)
-    @Path(PRODUCT_RESOURCE_PATH_ID_PATH)
-    public Response getCategoryById(@Parameter(description = PRIMARY_KEY_DESC, required = true)
-    @PathParam(PRODUCT_RESOURCE_PATH_ID_ELEMENT) int id) {*/
+
+    /**
+     * finds product by id
+     * @param id
+     * @return Response response
+     */
     @GET
     @Operation(description = GET_PRODUCT_BY_ID_OP_DESC)
     @APIResponses({
@@ -231,7 +274,12 @@ public class ProductResource {
 
         return response;
     }
-    
+
+    /**
+     * finds product by category id
+     * @param id
+     * @return Response response
+     */
     @GET
     @Path(CATEGORY_RESOURCE_NAME)
     @Operation(description = GET_PRODUCT_BY_CATEGORY_ID_OP_DESC)
@@ -242,14 +290,14 @@ public class ProductResource {
     })
     @RolesAllowed({USER_ROLENAME, ADMIN_ROLENAME})
     public Response getProductByCategoryId(@Parameter(description = PRIMARY_KEY_DESC, required = true)
-                                           @QueryParam(CATEGORY_EXTERNAL_RESOURCE_PATH_ID_ELEMENT) String id) {
+    @QueryParam(CATEGORY_EXTERNAL_RESOURCE_PATH_ID_ELEMENT) String id) {
         Response response = null;
-        
+
         if(id == null || id.isEmpty())
             return Response.status(NOT_FOUND).build();
 
         List<Product> prods = prodBean.getProductByCategoryId(Integer.parseInt(id));
-        
+
         response = Response.ok(prods).build();
 
         return response;

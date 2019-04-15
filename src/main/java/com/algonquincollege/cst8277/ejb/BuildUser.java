@@ -1,3 +1,15 @@
+/********************************************************************egg***m******a**************n************
+ * File: BuildUser.java
+ * Course materials (19W) CST 8277
+ * @author Mike Norman
+ * @author Elena Soukhanov 040871451
+ * @author Ksenia Lopukhina 040892102
+ * @author Svetlana Netchaeva 040858724
+ * @author Anna Shteyngart 040883547
+ * @author Pavel Jilinski 040878295
+ * @date 2019 04
+ *
+ */
 package com.algonquincollege.cst8277.ejb;
 
 import static com.algonquincollege.cst8277.utils.RestDemoConstants.ADMIN_ROLENAME;
@@ -34,25 +46,32 @@ import com.algonquincollege.cst8277.models.PlatformRole;
 import com.algonquincollege.cst8277.models.PlatformUser;
 import com.algonquincollege.cst8277.security.CustomIdentityStoreJPAHelper;
 
+/**
+ * class for creating a user
+ */
 @Startup
 @Singleton
 public class BuildUser {
 
+    /**
+     * CustomIdentityStoreJPAHelper injection
+     */
     @Inject
     protected CustomIdentityStoreJPAHelper jpaHelper;
 
-//    @Inject
-//    @ConfigProperty(name = DEFAULT_ADMIN_USER_PROPNAME, defaultValue = DEFAULT_ADMIN_USER)
-//    private String defaultAdminUsername;
-
-    //TODO - encrypt value inside microprofile-config.properties
-//    @Inject
-//    @ConfigProperty(name = DEFAULT_ADMIN_USER_PASSWORD_PROPNAME)
-//    private String defaultAdminUserPassword;
-
+    /**
+     * Pbkdf2PasswordHash injection
+     */
     @Inject
     protected Pbkdf2PasswordHash pbAndjPasswordHash;
 
+    /**
+     * creates user based on user name, password and role
+     * @param userName
+     * @param userPassword
+     * @param customerRole
+     * @return PlatformUser user
+     */
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public PlatformUser buildUser(String userName, String userPassword, List<PlatformRole> customerRole) {
         PlatformUser user = jpaHelper.findUserByName(userName);
@@ -68,13 +87,9 @@ public class BuildUser {
             String pwHash = pbAndjPasswordHash.generate(userPassword.toCharArray());
             user.setPwHash(pwHash);
 
-//            PlatformRole platformRole = new PlatformRole();
-//            platformRole.setRoleName(customerRole);
             Set<PlatformRole> platformRoles = new HashSet<PlatformRole>();
             for (PlatformRole x : customerRole) 
             	platformRoles.add(x); 
-//            Set<PlatformRole> platformRoles = user.getPlatformRoles();
-//            platformRoles.add(platformRoles);
             user.setPlatformRoles(platformRoles);
             jpaHelper.savePlatformUser(user);
         }

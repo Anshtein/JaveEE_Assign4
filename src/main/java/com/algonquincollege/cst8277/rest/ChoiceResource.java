@@ -1,3 +1,14 @@
+/********************************************************************egg***m******a**************n************
+ * File: ChoiceResource.java
+ * Course materials (19W) CST 8277
+ * @author Elena Soukhanov 040871451
+ * @author Ksenia Lopukhina 040892102
+ * @author Svetlana Netchaeva 040858724
+ * @author Anna Shteyngart 040883547
+ * @author Pavel Jilinski 040878295
+ * @date 2019 04
+ *
+ */
 package com.algonquincollege.cst8277.rest;
 
 import static com.algonquincollege.cst8277.rest.ChoiceConstants.ADD_CHOICE_OP_200_DESC;
@@ -57,24 +68,49 @@ import com.algonquincollege.cst8277.ejb.ChoiceBean;
 import com.algonquincollege.cst8277.ejb.ProductBean;
 import com.algonquincollege.cst8277.models.Choice;
 
-
+/**
+ * Resource class for Choice entity
+ * annotated with Path, accepted and produced media type (json format)
+ * 
+ * method annotations describing:
+ * response to HTTP request
+ * describes a sinble API operation on a path
+ * error messages in case of network or other problems
+ * security role permitted to access this method
+ */
 @Path(CHOICE_RESOURCE_NAME)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ChoiceResource { 
 
+    /**
+     * dependency on ChoiceBean ejb
+     */
     @EJB
     protected ChoiceBean choiceBean;
-    
+
+    /**
+     * dependency on ProductBean ejb
+     */
     @EJB
     protected ProductBean productBean;
     
+    /**
+     * dependency on CartBean ejb
+     */
     @EJB
     protected CartBean cartBean;
-
+    
+    /**
+     * injected SecurityContext
+     */
     @Inject
     protected SecurityContext sc;
 
+    /**
+     * finds list of Choice
+     * @return Response response
+     */
     @GET
     @Operation(description = GET_CHOICE_OP_DESC)
     @APIResponses({
@@ -90,6 +126,13 @@ public class ChoiceResource {
         return response;
     }
     
+    /**
+     * adds new Choice
+     * @param quantity
+     * @param cartId
+     * @param prodId
+     * @return Response response
+     */
     @POST
     @Operation(description = ADD_CHOICE_OP_DESC)
     @APIResponses({      
@@ -116,6 +159,14 @@ public class ChoiceResource {
         return response;
     }
     
+    /**
+     * updates a choice
+     * @param choiceId
+     * @param quantity
+     * @param cartId
+     * @param prodId
+     * @return Response response
+     */
     @PUT
     @Operation(description = UPDATE_CHOICE_OP_DESC)
     @APIResponses({
@@ -147,6 +198,11 @@ public class ChoiceResource {
         return response;
     }
     
+    /**
+     * finds choice by id
+     * @param id
+     * @return Response response
+     */
     @GET
     @Operation(description = GET_CHOICE_BY_ID_OP_DESC)
     @APIResponses({
@@ -167,85 +223,6 @@ public class ChoiceResource {
         }
         return response;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-//    @GET
-//    @Operation(description = GET_CHOICE_BY_ID_OP_DESC)
-//    @APIResponses({
-//        @APIResponse(responseCode = "200", description = GET_CHOICE_BY_ID_OP_200_DESC),
-//        @APIResponse(responseCode = "403", description = GET_CHOICE_BY_ID_OP_403_DESC),
-//        @APIResponse(responseCode = "404", description = GET_CHOICE_BY_ID_OP_404_DESC)
-//    })
-//    @RolesAllowed(USER_ROLENAME)
-//    @Path(CHOICE_RESOURCE_PATH_ID_PATH)
-//    public Response getEmployeeById(@Parameter(description = PRIMARY_KEY_DESC, required = true)
-//    @PathParam(CHOICE_RESOURCE_PATH_ID_ELEMENT) int id) {
-//        Response response = null;
-//
-//        /*
-//        if (!sc.isCallerInRole(USER_ROLENAME)) {
-//            //TODO - check if specific user is allowed to retrieve the specific employee
-//            response = Response.status(Status.FORBIDDEN).entity(GET_EMPLOYEES_OP_403_DESC_JSON_MSG).build();
-//        }
-//        else {
-//         */
-//        Choice choice = choiceBean.getChoiceById(id);
-//        if (choice == null) {
-//            response = Response.status(NOT_FOUND).build();
-//        }
-//        else {
-//            response = Response.ok(choice).build();
-//        }
-//        /*
-//        }
-//         */
-//
-//        return response;
-//    }
-//
-//    @POST
-//    @Path("/create/{param}")
-//    @Produces(MediaType.TEXT_PLAIN)
-//    public Response create(@PathParam("param") Product product) {
-//    //public Response create(Product product) {
-//        boolean output = choiceBean.addChoice(product);      
-//        return Response.status(200).entity(output).build();
-//    }
-//
-//    @POST
-//    @Path("/create")
-//    @Produces(MediaType.TEXT_PLAIN)
-//    public Response createQuery(@QueryParam("param") Product product) {
-//        boolean output = choiceBean.addChoice(product);
-//        return Response.status(200).entity(output).build();
-//    }
-//
-//    @PUT
-//    @Path("/update/{id}")
-//    @Produces("application/json")
-//    public Response updateChoice(@PathParam("id")int id) { 
-//        Choice choice = choiceBean.getChoiceById(id);
-//        Choice updated = choiceBean.updateChoice2(choice);
-//        return Response.ok(updated).build();
-//    }
-//
-//    @DELETE
-//    @Path("/delete/{id}")
-//    @Produces("application/json")
-//    public Response deleteById(@PathParam("id")int id) {
-//        Choice choice = choiceBean.getChoiceById(id);
-//        boolean output = choiceBean.deleteChoice(choice);
-//        return Response.status(200).entity(output).build();
-//    }
-
+  
 
 }

@@ -1,3 +1,14 @@
+/********************************************************************egg***m******a**************n************
+ * File: CustomerResource.java
+ * Course materials (19W) CST 8277
+ * @author Elena Soukhanov 040871451
+ * @author Ksenia Lopukhina 040892102
+ * @author Svetlana Netchaeva 040858724
+ * @author Anna Shteyngart 040883547
+ * @author Pavel Jilinski 040878295
+ * @date 2019 04
+ *
+ */
 package com.algonquincollege.cst8277.rest;
 
 
@@ -54,17 +65,37 @@ import com.algonquincollege.cst8277.ejb.SimpleBean;
 import com.algonquincollege.cst8277.models.Customer;
 import com.sun.mail.imap.protocol.Status;
 
+/**
+ * Resource class for Customer entity
+ * annotated with Path, accepted and produced media type (json format)
+ * 
+ * method annotations describing:
+ * response to HTTP request
+ * describes a sinble API operation on a path
+ * error messages in case of network or other problems
+ * security role permitted to access this method
+ */
 @Path(CUSTOMER_RESOURCE_NAME)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CustomerResource {
 
+    /**
+     * dependency on SimpleBean ejb
+     */
     @EJB
     protected SimpleBean simpleBean;
 
+    /**
+     * injected SecurityContext
+     */
     @Inject
     protected SecurityContext sc;
 
+    /**
+     * finds all customers
+     * @return Response response
+     */
     @GET
     @Operation(description = GET_CUSTOMERS_OP_DESC)
     @APIResponses({
@@ -92,6 +123,11 @@ public class CustomerResource {
         return response;
     }
 
+    /**
+     * finds customer by is
+     * @param id
+     * @return Response response
+     */
     @GET
     @Operation(description = GET_EMPLOYEE_BY_ID_OP_DESC)
     @APIResponses({
@@ -128,6 +164,12 @@ public class CustomerResource {
         return response;
     }
     
+    /**
+     * creates new customer
+     * @param param1
+     * @param param2
+     * @return Response response
+     */
     @POST
     @Path("/{param1}/{param2}")
     @PermitAll
@@ -138,6 +180,12 @@ public class CustomerResource {
         return Response.status(200).entity(output).build();
     }
     
+    /**
+     * creates a query
+     * @param param1
+     * @param param2
+     * @return Response response
+     */
     @POST
     @Path("/")
     @Produces(MediaType.TEXT_PLAIN)
@@ -147,6 +195,13 @@ public class CustomerResource {
         return Response.status(200).entity(output).build();
     }
     
+    /**
+     * updates a customer with new parameters
+     * @param id
+     * @param firstName
+     * @param lastName
+     * @return Response response
+     */
     @PUT
     @RolesAllowed(USER_ROLENAME)
     @Path("/{id}/{firstName}/{lastName}")
@@ -160,6 +215,12 @@ public class CustomerResource {
     	return Response.ok(updated).build();
     }
   
+    
+    /**
+     * deletes a customer
+     * @param id
+     * @return Response response
+     */
     @DELETE
     @RolesAllowed(USER_ROLENAME)
     @Path("/{id}")
