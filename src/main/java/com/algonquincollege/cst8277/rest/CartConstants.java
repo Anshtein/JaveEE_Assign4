@@ -10,9 +10,11 @@
  */
 package com.algonquincollege.cst8277.rest;
 
+
 /**
  * interface containing constants related to Cart 
  */
+
 public interface CartConstants {
 
     public static final String PREFIX_JSON_MSG = "{\"message\":\"";

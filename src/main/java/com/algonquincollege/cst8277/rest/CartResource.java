@@ -28,8 +28,6 @@ import static com.algonquincollege.cst8277.rest.CartConstants.ADD_CART_OP_DESC;
 import static com.algonquincollege.cst8277.rest.CartConstants.ADD_CART_OP_200_DESC;
 import static com.algonquincollege.cst8277.rest.CartConstants.ADD_CART_OP_403_DESC; 
 import static com.algonquincollege.cst8277.rest.CartConstants.ADD_CART_OP_404_DESC;
-
-
 import static com.algonquincollege.cst8277.utils.RestDemoConstants.ADMIN_ROLENAME;
 import static com.algonquincollege.cst8277.utils.RestDemoConstants.USER_ROLENAME;
 
@@ -89,6 +87,9 @@ public class CartResource {
     /**
      * dependency on ChoiceBean ejb
      */
+    @EJB
+    protected SimpleBean customerBean;
+    
     @EJB
     protected ChoiceBean choiceBean;
 
@@ -166,6 +167,7 @@ public class CartResource {
         response = Response.ok().build();
         return response;
     }
+
     
     /**
      * finds cart by cart id
@@ -194,6 +196,16 @@ public class CartResource {
      * @param id
      * @return Response response
      */
+    @DELETE
+    @RolesAllowed(USER_ROLENAME)
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteById(@PathParam("id")int id){
+        Cart deletedCart = cartBean.getCartById(id);
+       boolean output = cartBean.deleteCart(deletedCart);
+       return Response.status(200).entity(output).build();
+    }
+    
     @DELETE
     @RolesAllowed(USER_ROLENAME)
     @Path("/{id}")

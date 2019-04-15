@@ -35,6 +35,7 @@ public class CartBean {
     @PersistenceContext(unitName = PU_NAME)
     protected EntityManager em;
 
+
     /**
      * adds cart
      * @param newCart
@@ -56,6 +57,7 @@ public class CartBean {
         return em.createQuery(cq).getResultList();   
     }
 
+
     /**
      * updates cart 
      * @param updatedCart
@@ -65,6 +67,7 @@ public class CartBean {
         em.merge(updatedCart);
         return updatedCart.getId();
     }
+
 
     /**
      * deletes cart
@@ -76,7 +79,7 @@ public class CartBean {
             cart = em.merge(cart);
         }
         em.remove(cart);
-
+        
         if(em.contains(cart))
             return false;
         else return true;   
@@ -91,6 +94,7 @@ public class CartBean {
         return em.find(Cart.class, id);
     }
 
+
     /**
      * finds list of carts by customer id
      * @param id
@@ -102,5 +106,5 @@ public class CartBean {
         List<Cart> carts = q.getResultList();    
         return carts;
     }
- 
+
 }

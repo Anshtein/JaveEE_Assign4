@@ -175,7 +175,7 @@ public class ChoiceResource {
             @PathParam("prodId") int prodId) {
         Response response = null;
         Choice updatedChoice = choiceBean.getChoiceById(choiceId);  
-            updatedChoice.setQuantity(quantity);    
+        updatedChoice.setQuantity(quantity);    
         Cart cart = cartBean.getCartById(cartId);
         Product pr = productBean.getProductById(prodId);
         updatedChoice.setCart(cart);
@@ -209,6 +209,7 @@ public class ChoiceResource {
         response = Response.ok(choices).build();
         return response;
     }
+
   
     /**
      * deletes choice 
@@ -224,6 +225,5 @@ public class ChoiceResource {
        boolean output = choiceBean.deleteChoice(choice);
        return Response.status(200).entity(output).build();
     }
-
 
 }

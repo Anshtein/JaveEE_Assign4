@@ -72,6 +72,7 @@ import com.algonquincollege.cst8277.ejb.ProductCategoryBean;
 import com.algonquincollege.cst8277.models.Category;
 import com.algonquincollege.cst8277.models.Product;
 
+
 /**
  * Resource class for Category entity
  * annotated with Path, accepted and produced media type (json format)

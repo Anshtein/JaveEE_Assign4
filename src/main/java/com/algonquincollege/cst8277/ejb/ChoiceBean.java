@@ -41,7 +41,6 @@ public class ChoiceBean {
      * @param newChoice
      * @return int Choice id
      */
-
     public int addChoice(Choice newChoice) {
         em.persist(newChoice);
         return newChoice.getId();
@@ -68,6 +67,7 @@ public class ChoiceBean {
         return updatedChoice.getId();
     }
 
+
     /**
      * deletes choice
      * @param choice
@@ -76,18 +76,13 @@ public class ChoiceBean {
     public boolean deleteChoice(Choice choice) {
         if(choice!=null) {
         em.remove(choice);
-
             if(!em.contains(choice))
                 return true;
         }
-            return false;
+
+        return false;
     }
 
-    /**
-     * finds choice by id
-     * @param id
-     * @return Choice choice
-     */
     public Choice getChoiceById(int id) {
         return em.find(Choice.class, id);
     }
