@@ -22,7 +22,6 @@ public interface ProductConstants {
     public static final String PRODUCT_NAME = "product name";
     public static final String PRODUCT_ID = "product id";
     public static final String PRODUCT_PRICE = "product price";
-    //TODO go through and define or modify constants
     public static final String PRODUCT_RESOURCE_NAME = "product";
     public static final String PRODUCT_RESOURCE_PATH_ID_ELEMENT = "id";
     public static final String PRODUCT_RESOURCE_PATH_NAME_ELEMENT = "name";

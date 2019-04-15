@@ -1,3 +1,15 @@
+/********************************************************************egg***m******a**************n************
+ * File: CustomIdentityStore.java
+ * Course materials (19W) CST 8277
+ * @author Mike Norman
+ * @author Elena Soukhanov 040871451
+ * @author Ksenia Lopukhina 040892102
+ * @author Svetlana Netchaeva 040858724
+ * @author Anna Shteyngart 040883547
+ * @author Pavel Jilinski 040878295
+ * @date 2019 04
+ *
+ */
 package com.algonquincollege.cst8277.security;
 
 import static java.util.Collections.emptySet;
@@ -19,16 +31,29 @@ import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import com.algonquincollege.cst8277.models.PlatformRole;
 import com.algonquincollege.cst8277.models.PlatformUser;
 
+/**
+ * class for validating customer credentials
+ */
 @ApplicationScoped
 @Default
 public class CustomIdentityStore implements IdentityStore {
 
+    /**
+     * CustomIdentityStoreJPAHelper injection
+     */
     @Inject
     protected CustomIdentityStoreJPAHelper jpaHelper;
 
+    /**
+     * Pbkdf2PasswordHash injection
+     */
     @Inject
     protected Pbkdf2PasswordHash pbAndjPasswordHash;
 
+    /**
+     * validates customer credentials
+     * return CredentialValidationResult result
+     */
     @Override
     public CredentialValidationResult validate(Credential credential) {
 
@@ -80,6 +105,11 @@ public class CustomIdentityStore implements IdentityStore {
         return result;
     }
 
+    /**
+     * gets all roles from PlatformRole
+     * @param platformRoles
+     * @return Set of role names
+     */
     protected Set<String> getRolesNamesFromPlatformRoles(Set<PlatformRole> platformRoles) {
         Set<String> roleNames = emptySet();
         if (!platformRoles.isEmpty()) {
