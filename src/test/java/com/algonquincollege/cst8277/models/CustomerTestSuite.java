@@ -147,43 +147,13 @@ public class CustomerTestSuite  {
     	
     	EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        em.createQuery("delete from Customer c where c.firstName != 'CRUD'").executeUpdate();
+        em.createQuery("delete from Customer c where c.firstName = 'newname'").executeUpdate();
+    	em.getTransaction().commit();
     	
-    	TypedQuery<Customer> tq = em.createQuery("SELECT c FROM Customer c WHERE c.user IS NULL", Customer.class);
+    	TypedQuery<Customer> tq = em.createQuery("SELECT c FROM Customer c WHERE c.firstName != 'CRUD'", Customer.class);
     	List<Customer> result = tq.getResultList();
     	assertEquals(0, result.size());
     	em.close();	    
-    }
-    
-    /**
-     * Test SimpleBean
-     */
-    @Test
-    public void _06_test_getCustomerList() { 	
-    	List<Customer> result = sb.getCustomerList();
-    	assertEquals(4, result.size());
-    	em.close();	    
-    }
-    
-    /**
-     * Test SimpleBean
-     */
-    @Test
-    public void _07_test_getCustomerById() { 	
-    	Customer result = sb.getCustomerById(1);
-    	assertEquals("TEST1", result.getLastName());
-    	em.close();	    
-    }
-    
-    /**
-     * Test SimpleBean
-     */
-    @Test
-    public void _08_test_checkCustomerUsernameId() { 	
-    	boolean result = sb.checkCustomerUsernameId("CRUDTEST2", 2);
-    	assertTrue(result);
-    	em.close();	    
-    }
-    
+    }  
     
 }
