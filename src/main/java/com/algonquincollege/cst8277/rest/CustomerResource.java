@@ -82,15 +82,13 @@ public class CustomerResource {
         }
         else {
         */
-            List<Customer> emps = simpleBean.getEmployeeList();
-            List<String> names = new ArrayList<>();
-            for (Customer customer : emps) {
-            	names.add(customer.toString());				
-			}
-            response = Response.ok(names).build();
-        /*
-        }
-        */
+            List<Customer> emps = simpleBean.getCustomerList();
+//            List<String> names = new ArrayList<>();
+//            for (Customer customer : emps) {
+//            	names.add(customer.toString());				
+//			}
+            response = Response.ok(emps).build();
+
         return response;
     }
 
@@ -104,7 +102,7 @@ public class CustomerResource {
     @RolesAllowed(USER_ROLENAME)
     @Path(EMPLOYEE_RESOURCE_PATH_ID_PATH)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response getEmployeeById(@Parameter(description = PRIMARY_KEY_DESC, required = true)
+    public Response getCustomerById(@Parameter(description = PRIMARY_KEY_DESC, required = true)
         @PathParam(EMPLOYEE_RESOURCE_PATH_ID_ELEMENT) int id) {
         Response response = null;
         Principal user = sc.getCallerPrincipal();
@@ -112,7 +110,7 @@ public class CustomerResource {
         
         
         if (!simpleBean.checkCustomerUsernameId(user.getName(), id)) {
-            //TODO - check if specific user is allowed to retrieve the specific employee
+
             response = Response.status(javax.ws.rs.core.Response.Status.FORBIDDEN).build();
         }
         else if (simpleBean.checkCustomerUsernameId(user.getName(), id)){
@@ -123,7 +121,7 @@ public class CustomerResource {
                 response = Response.status(NOT_FOUND).build();
             }
             else {
-                response = Response.ok(result).build();
+                response = Response.ok(emp).build();
             }
         }
 
