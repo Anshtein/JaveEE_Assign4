@@ -7,11 +7,8 @@
  * @author Anna Shteyngart 040883547
  * @author Pavel Jilinski 040878295
  * @date 2019 04
- *
  */
 package com.algonquincollege.cst8277.rest;
-
-import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 /**
  * interface containing constants related to Cart 

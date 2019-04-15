@@ -25,7 +25,6 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-import com.algonquincollege.cst8277.models.Category;
 import com.algonquincollege.cst8277.models.Product;
 
 /**
@@ -62,6 +61,23 @@ public class ProductBean {
     public int updateProduct(Product prodWithUpdatedFields) {
         em.merge(prodWithUpdatedFields);
         return prodWithUpdatedFields.getId();
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public void deleteProductById(int id) {
+        Product product = em.find(Product.class, id);
+        
+        if(product != null && product.getId() > 0) {
+            em.createNativeQuery("DELETE FROM CHOICE " + 
+                    "WHERE PRODUCT_ID = " + id).executeUpdate();
+            
+            em.createNativeQuery("DELETE FROM CATEGORY_PROD " + 
+                    "WHERE PROD_ID = " + id).executeUpdate();
+            
+            em.createNativeQuery("DELETE FROM PRODUCT " + 
+                    "WHERE ID = " + id).executeUpdate();
+
+        }
     }
 
     /**

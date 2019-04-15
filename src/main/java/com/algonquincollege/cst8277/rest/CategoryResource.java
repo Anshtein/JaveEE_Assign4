@@ -7,16 +7,13 @@
  * @author Anna Shteyngart 040883547
  * @author Pavel Jilinski 040878295
  * @date 2019 04
- *
  */
 
 package com.algonquincollege.cst8277.rest;
 
 import static com.algonquincollege.cst8277.rest.CategoryConstants.CATEGORY_RESOURCE_NAME;
-import static com.algonquincollege.cst8277.rest.CategoryConstants.CATEGORY_RESOURCE_PATH_ID_ELEMENT;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.CATEGORY_RESOURCE_PATH_ID_PATH;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.CATEGORY_RESOURCE_PATH_NAME_ELEMENT;
-import static com.algonquincollege.cst8277.rest.CategoryConstants.CATEGORY_RESOURCE_PATH_NAME_PATH;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.GET_CATEGORY_OP_200_DESC;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.GET_CATEGORY_OP_403_DESC;
 //import static com.algonquincollege.cst8277.rest.CategoryConstants.GET_CATEGORY_OP_403_DESC_JSON_MSG;
@@ -29,12 +26,10 @@ import static com.algonquincollege.cst8277.rest.CategoryConstants.UPDATE_CATEGOR
 //import static com.algonquincollege.cst8277.rest.CategoryConstants.UPDATE_CATEGORY_OP_403_JSON_MSG;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.UPDATE_CATEGORY_OP_404_DESC;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.UPDATE_CATEGORY_OP_DESC;
-import static com.algonquincollege.cst8277.rest.CategoryConstants.UPDATE_CATEGORY_BY_ID;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.GET_CATEGORY_BY_ID_OP_200_DESC;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.GET_CATEGORY_BY_ID_OP_403_DESC;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.GET_CATEGORY_BY_ID_OP_404_DESC;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.GET_CATEGORY_BY_ID_OP_DESC;
-import static com.algonquincollege.cst8277.rest.CategoryConstants.PRIMARY_KEY_DESC;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.ADD_CATEGORY_OP_DESC;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.ADD_CATEGORY_OP_200_DESC;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.ADD_CATEGORY_OP_403_DESC;
@@ -44,6 +39,7 @@ import static com.algonquincollege.cst8277.rest.CategoryConstants.CATEGORY_ID;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.DELETE_CATEGORY_BY_ID;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.DELETE_CATEGORY_BY_ID_OP_200;
 import static com.algonquincollege.cst8277.rest.CategoryConstants.DELETE_CATEGORY_BY_ID_OP_403;
+import static com.algonquincollege.cst8277.rest.CategoryConstants.CATEGORY_RESOURCE_PATH_ID_ELEMENT;
 import static com.algonquincollege.cst8277.utils.RestDemoConstants.ADMIN_ROLENAME;
 //import static com.algonquincollege.cst8277.utils.RestDemoConstants.USER_ROLENAME;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
@@ -74,6 +70,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 
 import com.algonquincollege.cst8277.ejb.ProductCategoryBean;
 import com.algonquincollege.cst8277.models.Category;
+import com.algonquincollege.cst8277.models.Product;
 
 /**
  * Resource class for Category entity
@@ -164,11 +161,11 @@ public class CategoryResource {
     })
     @RolesAllowed(ADMIN_ROLENAME)
     public Response updateCategory(@Parameter(description = CATEGORY_ID, required = true)
-    @QueryParam(CATEGORY_RESOURCE_PATH_NAME_ELEMENT) String id,
+    @QueryParam(CATEGORY_RESOURCE_PATH_ID_ELEMENT) String id,
     @Parameter(description = CATEGORY_NAME, required = true)
     @QueryParam(CATEGORY_RESOURCE_PATH_NAME_ELEMENT) String categoryName) {
         Response response = null;
-        Category catWithUpdatedFields = new Category();
+        Category catWithUpdatedFields = prodCategoryBean.getCategoryById(Integer.parseInt(id));
         catWithUpdatedFields.setId(Integer.parseInt(id));
         catWithUpdatedFields.setName(categoryName);
         prodCategoryBean.updateCategory(catWithUpdatedFields);
@@ -219,7 +216,8 @@ public class CategoryResource {
     })
     
     @RolesAllowed(ADMIN_ROLENAME)
-    public Response deleteCategoryById(@PathParam("id") String id) {
+    public Response deleteCategoryById(@Parameter(description = CATEGORY_ID, required = true)
+                                      @QueryParam(CATEGORY_RESOURCE_PATH_ID_ELEMENT) String id) {
         Response response = null;
 
         Category category = prodCategoryBean.getCategoryById(Integer.parseInt(id));
@@ -227,6 +225,7 @@ public class CategoryResource {
             response = Response.status(NOT_FOUND).build();
         }
         else {
+            prodCategoryBean.deleteCategoryById(Integer.parseInt(id));
             response = Response.ok(category).build();
         }
         return response;
