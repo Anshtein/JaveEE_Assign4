@@ -1,5 +1,6 @@
 package com.algonquincollege.cst8277.models;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -104,6 +105,19 @@ public class ProductCategoryTestSuite {
     }
     
     @Test
+    public void getAllCategories() {
+        EntityManager em = emf.createEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+        Root<Category> rootEntry = cq.from(Category.class);
+        CriteriaQuery<Category> all = cq.select(rootEntry);
+        TypedQuery<Category> allQuery = em.createQuery(all);
+
+        assertNotNull(allQuery);
+        assertTrue(allQuery.getResultList().size() > 0);
+    }
+    
+    @Test
     public void deleteCategory() {
         logger.info("deleteCategory::enter");
         
@@ -143,7 +157,7 @@ public class ProductCategoryTestSuite {
         return deletedCount;
     }
 
-    public void cleanUpCategoryTable() {
+    /*public void cleanUpCategoryTable() {
         logger.info("cleanUpCategoryTable::enter");
         // make sure that category table is empty
         this.deleteAllCategories();
@@ -159,25 +173,18 @@ public class ProductCategoryTestSuite {
         List<Product> allProds = this.getAllProducts();
         assertTrue(allProds.size() == 0);
         logger.info("cleanUpProductTable::exit");
-    }
+    }*/
     
-    public List<Category> getAllCategories() {
-        EntityManager em = emf.createEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Category> cq = cb.createQuery(Category.class);
-        Root<Category> rootEntry = cq.from(Category.class);
-        CriteriaQuery<Category> all = cq.select(rootEntry);
-        TypedQuery<Category> allQuery = em.createQuery(all);
-        return allQuery.getResultList();
-    }
-
-    public List<Product> getAllProducts() {
+    
+    @Test
+    public void getAllProducts() {
         EntityManager em = emf.createEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Product> cq = cb.createQuery(Product.class);
         Root<Product> rootEntry = cq.from(Product.class);
         CriteriaQuery<Product> all = cq.select(rootEntry);
         TypedQuery<Product> allQuery = em.createQuery(all);
-        return allQuery.getResultList();
+
+        assertTrue(allQuery.getResultList().size() > 0);
     }
 }
