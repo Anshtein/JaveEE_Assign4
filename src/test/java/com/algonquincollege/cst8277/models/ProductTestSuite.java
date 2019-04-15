@@ -38,7 +38,7 @@ import com.algonquincollege.cst8277.ejb.SimpleBean;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ProductTestSuite {
-    public static final String SHOPPING_CART_PU_NAME = "shopping_cart_jee5";
+    public static final String SHOPPING_CART_PU_NAME = "shopping_cart_jee56";
     private static final Class<?> _thisClaz = MethodHandles.lookup().lookupClass();
     private static final Logger logger = LoggerFactory.getLogger(_thisClaz);
     
@@ -103,20 +103,22 @@ public class ProductTestSuite {
     @Test
     public void deleteProduct() {
         logger.info("deleteProduct::enter");
-        Product product = em.find(Product.class, 1);
+        Product product = em.find(Product.class, 2);
         
         if(product != null && product.getId() > 0) {
             em.getTransaction().begin();
-            em.remove(product);
-            em.getTransaction().commit();
-            /*em.createNativeQuery("DELETE FROM CHOICE " + 
+            em.createNativeQuery("DELETE FROM CHOICE " + 
                     "WHERE PRODUCT_ID = " + product.getId()).executeUpdate();
             
             em.createNativeQuery("DELETE FROM CATEGORY_PROD " + 
                     "WHERE PROD_ID = " + product.getId()).executeUpdate();
             
-            em.createNativeQuery("DELETE FROM PRODUCT " + 
-                    "WHERE ID = " + product.getId()).executeUpdate();*/
+            em.remove(product);
+            em.getTransaction().commit();
+           
+            
+//            em.createNativeQuery("DELETE FROM PRODUCT " + 
+//                    "WHERE ID = " + product.getId()).executeUpdate();
 
         }
         logger.info("deleteProduct::exit");
