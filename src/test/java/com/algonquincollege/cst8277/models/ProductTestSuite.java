@@ -1,6 +1,7 @@
 package com.algonquincollege.cst8277.models;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.invoke.MethodHandles;
@@ -19,6 +20,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.validation.constraints.Size;
 
 import org.eclipse.persistence.logging.AbstractSessionLog;
 import org.eclipse.persistence.logging.DefaultSessionLog;
@@ -38,7 +40,7 @@ import com.algonquincollege.cst8277.ejb.SimpleBean;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ProductTestSuite {
-    public static final String SHOPPING_CART_PU_NAME = "shopping_cart_jee56";
+    public static final String SHOPPING_CART_PU_NAME = "shopping_cart_jee5";
     private static final Class<?> _thisClaz = MethodHandles.lookup().lookupClass();
     private static final Logger logger = LoggerFactory.getLogger(_thisClaz);
     
@@ -96,8 +98,25 @@ public class ProductTestSuite {
         em.persist(prod1);
         em.getTransaction().commit();
 
+        Product prod = em.find(Product.class, prod1.getId());
+        
+        assertNotNull(prod);
         
         logger.info("createProduct::exit");
+    }
+    
+    @Test
+    public void readProduct() {
+        logger.info("deleteProduct::enter");
+        Product product = em.find(Product.class, 1);
+        
+        if(product != null && product.getId() > 0) {
+            assertNotNull(product);
+        }
+        else
+        {
+            assertNull(product);
+        }
     }
     
     @Test
@@ -112,13 +131,11 @@ public class ProductTestSuite {
             
             em.createNativeQuery("DELETE FROM CATEGORY_PROD " + 
                     "WHERE PROD_ID = " + product.getId()).executeUpdate();
-            
             em.remove(product);
             em.getTransaction().commit();
-           
-            
-//            em.createNativeQuery("DELETE FROM PRODUCT " + 
-//                    "WHERE ID = " + product.getId()).executeUpdate();
+            /*            
+            em.createNativeQuery("DELETE FROM PRODUCT " + 
+                    "WHERE ID = " + product.getId()).executeUpdate();*/
 
         }
         logger.info("deleteProduct::exit");
@@ -147,7 +164,7 @@ public class ProductTestSuite {
         return deletedCount;
     }
 
-    public void cleanUpCategoryTable() {
+    /*public void cleanUpCategoryTable() {
         logger.info("cleanUpCategoryTable::enter");
         // make sure that category table is empty
         this.deleteAllCategories();
@@ -163,16 +180,18 @@ public class ProductTestSuite {
         List<Product> allProds = this.getAllProducts();
         assertTrue(allProds.size() == 0);
         logger.info("cleanUpProductTable::exit");
-    }
+    }*/
     
-    public List<Category> getAllCategories() {
+    @Test
+    public void getAllCategories() {
         EntityManager em = emf.createEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Category> cq = cb.createQuery(Category.class);
         Root<Category> rootEntry = cq.from(Category.class);
         CriteriaQuery<Category> all = cq.select(rootEntry);
         TypedQuery<Category> allQuery = em.createQuery(all);
-        return allQuery.getResultList();
+
+        assertTrue(allQuery.getResultList().size() > 0);
     }
 
     @Test
@@ -185,13 +204,15 @@ public class ProductTestSuite {
         logger.info("updateProduct::exit");
     }
 
-    public List<Product> getAllProducts() {
+    @Test
+    public void getAllProducts() {
         EntityManager em = emf.createEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Product> cq = cb.createQuery(Product.class);
         Root<Product> rootEntry = cq.from(Product.class);
         CriteriaQuery<Product> all = cq.select(rootEntry);
         TypedQuery<Product> allQuery = em.createQuery(all);
-        return allQuery.getResultList();
+
+        assertTrue(allQuery.getResultList().size() > 0);
     }
 }
