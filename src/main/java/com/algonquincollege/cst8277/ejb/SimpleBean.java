@@ -44,7 +44,7 @@ public class SimpleBean {
      */
     @Inject
     protected BuildUser buildUser;
-    
+
     /**
      * EntityManager injected into the bean
      */
@@ -70,7 +70,7 @@ public class SimpleBean {
     public Customer getCustomerById(int id) {
         return em.find(Customer.class, id);
     }
-    
+
     /**
      * checks if username of a customer found is equal to the one passed in parameters
      * @param username
@@ -85,9 +85,9 @@ public class SimpleBean {
             return true;
         }
         return false;
-        
+
     }
-    
+
     /**
      * adds a new customer
      * @param firstName
@@ -98,7 +98,7 @@ public class SimpleBean {
         if (!firstName.isEmpty() && !lastName.isEmpty()) {
             String userPassword = "temppwd";
             String customerRole = "customer";
-            
+
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<PlatformRole> cq = cb.createQuery(PlatformRole.class);
             Root<PlatformRole> root = cq.from(PlatformRole.class);       
@@ -106,24 +106,24 @@ public class SimpleBean {
             cq.where(cb.equal(root.get(PlatformRole_.roleName), "customer"));
             TypedQuery<PlatformRole> tq = em.createQuery(cq);
             List<PlatformRole> role = tq.getResultList(); 
-            
+
             PlatformUser pu = buildUser.buildUser(firstName+lastName, userPassword, role);
 
-            
+
             Customer newCustomer = new Customer();
             newCustomer.setFirstName(firstName);
             newCustomer.setLastName(lastName);
             newCustomer.setUser(pu);
-            
+
             em.persist(newCustomer);
-                            
+
             if(em.contains(newCustomer))
                 return true;
             else return false;
         }
         return false;
     }
-    
+
     /**
      * deletes customer
      * @param customer
@@ -134,12 +134,12 @@ public class SimpleBean {
             customer = em.merge(customer);
         }
         em.remove(customer);
-        
+
         if(em.contains(customer))
             return false;
         else return true;   
     }
-    
+
     /**
      * updates Customer
      * annotated with @TransactionAttribute to specify 

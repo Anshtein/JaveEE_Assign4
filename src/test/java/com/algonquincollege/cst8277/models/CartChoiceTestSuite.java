@@ -1,3 +1,13 @@
+/********************************************************************egg***m******a**************n************
+ * File: CartChoiceTestSuite.java
+ * Course materials (19W) CST 8277
+ * @author Elena Soukhanov 040871451
+ * @author Ksenia Lopukhina 040892102
+ * @author Svetlana Netchaeva 040858724
+ * @author Anna Shteyngart 040883547
+ * @author Pavel Jilinski 040878295
+ * @date 2019 04
+ */
 package com.algonquincollege.cst8277.models;
 
 
@@ -21,17 +31,28 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+/**
+ * testing Choice
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CartChoiceTestSuite {
-    
+
+    /**
+     * EntityManagerFactory obj
+     */
     static EntityManagerFactory emp;
-    
+
+    /**
+     * set up method
+     */
     @BeforeClass
     public static void oneTimeSetUp() {
         emp = Persistence.createEntityManagerFactory("shopping_cart_jee56");
     }
-    
-    
+
+    /**
+     * creating a cart, checking if amount of carts is bigger by 1
+     */
     @Test
     public void _01_test_create_cart() {
         EntityManager em = emp.createEntityManager();
@@ -45,17 +66,20 @@ public class CartChoiceTestSuite {
         }else {
             list = new ArrayList<>();
         }
-         
+
         list.add(cart);
         cust.setCarts(list);
         em.persist(cust);
         cust = em.find(Customer.class, Integer.valueOf(1));
-        
+
         assertEquals(cartCount+1, cust.getCarts().size());
         em.close();
-    
+
     }
-    
+
+    /**
+     * testing if choice was created
+     */
     @Test
     public void _02_test_create_choice() {
         EntityManager em = emp.createEntityManager();
@@ -67,7 +91,7 @@ public class CartChoiceTestSuite {
         List<Choice> choiceList = cart.getChoices() == null ? new ArrayList<>() : cart.getChoices();
         int prevCount = choiceList.size();
         choiceList.add(choice);
-        
+
         em.getTransaction().begin();
         em.persist(choice);
         em.persist(cart);
@@ -76,11 +100,14 @@ public class CartChoiceTestSuite {
 
         cust = em.find(Customer.class, Integer.valueOf(1));
         int nextCount = cust.getCarts().get(0).getChoices().size();
-       
+
         assertEquals(prevCount+1, nextCount);
         em.close();  
     }
-    
+
+    /**
+     * testing if quantity of choice is as expected
+     */
     @Test
     public void _03_test_read_choice() {
         EntityManager em = emp.createEntityManager();
@@ -96,7 +123,10 @@ public class CartChoiceTestSuite {
         assertEquals(false, list.isEmpty());
         em.close();
     }
-    
+
+    /**
+     * testing if choice was updated
+     */
     @Test
     public void _04_test_update_choice() {
         EntityManager em = emp.createEntityManager();
@@ -122,7 +152,10 @@ public class CartChoiceTestSuite {
         assertEquals(219, updatedChoice.quantity);
         em.close();
     }
-    
+
+    /**
+     * testing if choice was deleted
+     */
     @Test
     public void _05_test_delete_choice() {
         EntityManager em = emp.createEntityManager();
@@ -138,7 +171,7 @@ public class CartChoiceTestSuite {
         for(Choice val:selectedChoices) {
             em.remove(val);
         }
-        
+
         em.getTransaction().commit();
         cb = em.getCriteriaBuilder();
         cq = cb.createQuery(Choice.class);
@@ -148,10 +181,10 @@ public class CartChoiceTestSuite {
                 cb.equal(choice.get(Choice_.quantity), 219));
         q = em.createQuery(cq);
         selectedChoices  = q.getResultList();
-        
+
         assertEquals(true, selectedChoices.isEmpty());
         em.close();
     }
-    
-    
+
+
 }

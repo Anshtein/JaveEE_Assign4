@@ -80,9 +80,7 @@ public class CartResource {
     protected CartBean cartBean;
     /**
      * dependency on SimpleBean ejb
-     */
-    @EJB
-    protected SimpleBean customerBean;
+     */   
     
     /**
      * dependency on ChoiceBean ejb
@@ -204,17 +202,6 @@ public class CartResource {
         Cart deletedCart = cartBean.getCartById(id);
        boolean output = cartBean.deleteCart(deletedCart);
        return Response.status(200).entity(output).build();
-    }
-    
-    @DELETE
-    @RolesAllowed(USER_ROLENAME)
-    @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response deleteById(@PathParam("id")int id){
-        Cart deletedCart = cartBean.getCartById(id);
-       boolean output = cartBean.deleteCart(deletedCart);
-       return Response.status(200).entity(output).build();
-    }
-    
+    }   
     
 }

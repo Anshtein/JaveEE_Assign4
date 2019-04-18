@@ -51,7 +51,7 @@ public class ProductCategoryBean {
         em.persist(catWithUpdatedFields);
         return catWithUpdatedFields.getId();
     }
-    
+
     /**
      * updates a category
      * @param catWithUpdatedFields
@@ -82,7 +82,7 @@ public class ProductCategoryBean {
     public Category getCategoryById(int id) {
         return em.find(Category.class, id);
     }
-    
+
     /**
      * deletes category
      * @param id
@@ -90,23 +90,23 @@ public class ProductCategoryBean {
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void deleteCategoryById(int id) {
         Category category = em.find(Category.class, id);
-        
+
         if(category != null && category.getId() > 0) {
             /*em.createNativeQuery("DELETE FROM CHOICE " + 
                     "WHERE PRODUCT_ID = " + id).executeUpdate();
-            
+
             em.createNativeQuery("DELETE FROM PRODUCT " + 
                     "WHERE ID = " + id).executeUpdate();*/
-            
+
             em.createNativeQuery("DELETE FROM CATEGORY_PROD " + 
                     "WHERE CATEGORY_ID = " + id).executeUpdate();
-                        
+
             em.createNativeQuery("DELETE FROM CATEGORY " + 
                     "WHERE ID = " + id).executeUpdate();
 
         }       
     }
-    
+
     /**
      * updates category
      * @param id

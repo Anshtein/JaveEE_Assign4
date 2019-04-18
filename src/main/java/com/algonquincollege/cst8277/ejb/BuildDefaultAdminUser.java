@@ -81,7 +81,7 @@ public class BuildDefaultAdminUser {
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @PostConstruct
     public void init() {
-        
+
         PlatformUser defaultAdminUser = jpaHelper.findUserByName(defaultAdminUsername);
         if (defaultAdminUser == null) {
             defaultAdminUser = new PlatformUser();
@@ -101,12 +101,12 @@ public class BuildDefaultAdminUser {
             platformRoles.add(platformRole);
             jpaHelper.savePlatformUser(defaultAdminUser);
         }
-        
+
         String customer = "customer";
         PlatformUser customerUser = jpaHelper.findUserByName(customer);
         if (customerUser == null) {
-        	customerUser = new PlatformUser();
-        	customerUser.setUsername(defaultAdminUsername);
+            customerUser = new PlatformUser();
+            customerUser.setUsername(defaultAdminUsername);
             Map<String, String> pbAndjProperties = new HashMap<>();
             pbAndjProperties.put(PROPERTY_ALGORITHM, DEFAULT_PROPERTY_ALGORITHM);
             pbAndjProperties.put(PROPERTY_ITERATIONS, DEFAULT_PROPERTY_ITERATIONS);

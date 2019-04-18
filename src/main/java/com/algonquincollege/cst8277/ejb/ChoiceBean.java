@@ -75,7 +75,7 @@ public class ChoiceBean {
      */
     public boolean deleteChoice(Choice choice) {
         if(choice!=null) {
-        em.remove(choice);
+            em.remove(choice);
             if(!em.contains(choice))
                 return true;
         }

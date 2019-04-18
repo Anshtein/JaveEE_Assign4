@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.algonquincollege.cst8277.models.ChoiceProductTestSuite" time="1.6" tests="5" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="sun.desktop" value="windows"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="C:\Users\ansht\eclipse-workspace\shopping_cart_jee5\target\test-classes;C:\Users\ansht\eclipse-workspace\shopping_cart_jee5\target\classes;C:\Users\ansht\.m2\repository\org\slf4j\slf4j-api\1.7.25\slf4j-api-1.7.25.jar;C:\Users\ansht\.m2\repository\ch\qos\logback\logback-classic\1.2.3\logback-classic-1.2.3.jar;C:\Users\ansht\.m2\repository\ch\qos\logback\logback-core\1.2.3\logback-core-1.2.3.jar;C:\Users\ansht\.m2\repository\javax\javaee-api\8.0\javaee-api-8.0.jar;C:\Users\ansht\.m2\repository\com\sun\mail\javax.mail\1.6.0\javax.mail-1.6.0.jar;C:\Users\ansht\.m2\repository\javax\activation\activation\1.1\activation-1.1.jar;C:\Users\ansht\.m2\repository\org\eclipse\microprofile\openapi\microprofile-openapi-api\1.1.2\microprofile-openapi-api-1.1.2.jar;C:\Users\ansht\.m2\repository\org\osgi\org.osgi.annotation.versioning\1.0.0\org.osgi.annotation.versioning-1.0.0.jar;C:\Users\ansht\.m2\repository\org\eclipse\microprofile\config\microprofile-config-api\1.3\microprofile-config-api-1.3.jar;C:\Users\ansht\.m2\repository\org\glassfish\soteria\javax.security.enterprise\1.0\javax.security.enterprise-1.0.jar;C:\Users\ansht\.m2\repository\javax\security\enterprise\javax.security.enterprise-api\1.1-b01-SNAPSHOT\javax.security.enterprise-api-1.1-b01-SNAPSHOT.jar;C:\Users\ansht\.m2\repository\com\h2database\h2\1.4.197\h2-1.4.197.jar;C:\Users\ansht\.m2\repository\org\eclipse\persistence\eclipselink\2.7.3\eclipselink-2.7.3.jar;C:\Users\ansht\.m2\repository\org\eclipse\persistence\commonj.sdo\2.1.1\commonj.sdo-2.1.1.jar;C:\Users\ansht\.m2\repository\javax\validation\validation-api\2.0.1.Final\validation-api-2.0.1.Final.jar;C:\Users\ansht\.m2\repository\javax\json\javax.json-api\1.1.2\javax.json-api-1.1.2.jar;C:\Users\ansht\.m2\repository\javax\persistence\javax.persistence-api\2.2\javax.persistence-api-2.2.jar;C:\Users\ansht\.m2\repository\junit\junit\4.12\junit-4.12.jar;C:\Users\ansht\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\ansht\.m2\repository\org\eclipse\persistence\org.eclipse.persistence.extension\2.7.3\org.eclipse.persistence.extension-2.7.3.jar;C:\Users\ansht\.m2\repository\org\eclipse\persistence\org.eclipse.persistence.core\2.7.3\org.eclipse.persistence.core-2.7.3.jar;C:\Users\ansht\.m2\repository\org\eclipse\persistence\org.eclipse.persistence.asm\2.7.3\org.eclipse.persistence.asm-2.7.3.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="user.timezone" value="America/New_York"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="user.country" value="CA"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.boot.library.path" value="C:\Java\jdk1.8.0_192\jre\bin"/>
+    <property name="sun.java.command" value="C:\Users\ansht\AppData\Local\Temp\surefire923873723531009752\surefirebooter4301868508801061214.jar C:\Users\ansht\AppData\Local\Temp\surefire923873723531009752 2019-04-14T23-44-59_144-jvmRun1 surefire4358223035459422350tmp surefire_12120089280246006018tmp"/>
+    <property name="surefire.test.class.path" value="C:\Users\ansht\eclipse-workspace\shopping_cart_jee5\target\test-classes;C:\Users\ansht\eclipse-workspace\shopping_cart_jee5\target\classes;C:\Users\ansht\.m2\repository\org\slf4j\slf4j-api\1.7.25\slf4j-api-1.7.25.jar;C:\Users\ansht\.m2\repository\ch\qos\logback\logback-classic\1.2.3\logback-classic-1.2.3.jar;C:\Users\ansht\.m2\repository\ch\qos\logback\logback-core\1.2.3\logback-core-1.2.3.jar;C:\Users\ansht\.m2\repository\javax\javaee-api\8.0\javaee-api-8.0.jar;C:\Users\ansht\.m2\repository\com\sun\mail\javax.mail\1.6.0\javax.mail-1.6.0.jar;C:\Users\ansht\.m2\repository\javax\activation\activation\1.1\activation-1.1.jar;C:\Users\ansht\.m2\repository\org\eclipse\microprofile\openapi\microprofile-openapi-api\1.1.2\microprofile-openapi-api-1.1.2.jar;C:\Users\ansht\.m2\repository\org\osgi\org.osgi.annotation.versioning\1.0.0\org.osgi.annotation.versioning-1.0.0.jar;C:\Users\ansht\.m2\repository\org\eclipse\microprofile\config\microprofile-config-api\1.3\microprofile-config-api-1.3.jar;C:\Users\ansht\.m2\repository\org\glassfish\soteria\javax.security.enterprise\1.0\javax.security.enterprise-1.0.jar;C:\Users\ansht\.m2\repository\javax\security\enterprise\javax.security.enterprise-api\1.1-b01-SNAPSHOT\javax.security.enterprise-api-1.1-b01-SNAPSHOT.jar;C:\Users\ansht\.m2\repository\com\h2database\h2\1.4.197\h2-1.4.197.jar;C:\Users\ansht\.m2\repository\org\eclipse\persistence\eclipselink\2.7.3\eclipselink-2.7.3.jar;C:\Users\ansht\.m2\repository\org\eclipse\persistence\commonj.sdo\2.1.1\commonj.sdo-2.1.1.jar;C:\Users\ansht\.m2\repository\javax\validation\validation-api\2.0.1.Final\validation-api-2.0.1.Final.jar;C:\Users\ansht\.m2\repository\javax\json\javax.json-api\1.1.2\javax.json-api-1.1.2.jar;C:\Users\ansht\.m2\repository\javax\persistence\javax.persistence-api\2.2\javax.persistence-api-2.2.jar;C:\Users\ansht\.m2\repository\junit\junit\4.12\junit-4.12.jar;C:\Users\ansht\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\ansht\.m2\repository\org\eclipse\persistence\org.eclipse.persistence.extension\2.7.3\org.eclipse.persistence.extension-2.7.3.jar;C:\Users\ansht\.m2\repository\org\eclipse\persistence\org.eclipse.persistence.core\2.7.3\org.eclipse.persistence.core-2.7.3.jar;C:\Users\ansht\.m2\repository\org\eclipse\persistence\org.eclipse.persistence.asm\2.7.3\org.eclipse.persistence.asm-2.7.3.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\ansht"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.home" value="C:\Java\jdk1.8.0_192\jre"/>
+    <property name="basedir" value="C:\Users\ansht\eclipse-workspace\shopping_cart_jee5"/>
+    <property name="file.separator" value="\"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="C:\Users\ansht\AppData\Local\Temp\surefire923873723531009752\surefirebooter4301868508801061214.jar"/>
+    <property name="sun.boot.class.path" value="C:\Java\jdk1.8.0_192\jre\lib\resources.jar;C:\Java\jdk1.8.0_192\jre\lib\rt.jar;C:\Java\jdk1.8.0_192\jre\lib\sunrsasign.jar;C:\Java\jdk1.8.0_192\jre\lib\jsse.jar;C:\Java\jdk1.8.0_192\jre\lib\jce.jar;C:\Java\jdk1.8.0_192\jre\lib\charsets.jar;C:\Java\jdk1.8.0_192\jre\lib\jfr.jar;C:\Java\jdk1.8.0_192\jre\classes"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="1.8.0_192-b12"/>
+    <property name="user.name" value="ansht"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.endorsed.dirs" value="C:\Java\jdk1.8.0_192\jre\lib\endorsed"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\ansht\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\ansht\AppData\Local\Temp\"/>
+    <property name="java.version" value="1.8.0_192"/>
+    <property name="user.dir" value="C:\Users\ansht\eclipse-workspace\shopping_cart_jee5"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="java.library.path" value="C:\Java\jdk1.8.0_192\jre\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:/Java/jdk1.8.0_192/bin/../jre/bin/server;C:/Java/jdk1.8.0_192/bin/../jre/bin;C:/Java/jdk1.8.0_192/bin/../jre/lib/amd64;D:\app\Shte0006\product\12.1.0\dbhome_1\bin;D:\app\Anshtein\product\12.1.0\dbhome_1\bin;C:\Java\jdk1.8.0_192\bin;C:\Maven\apache-maven-3.5.3\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\TortoiseGit\bin;C:\Users\ansht\AppData\Local\Microsoft\WindowsApps;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Users\ansht\AppData\Local\GitHubDesktop\bin;C:\Users\ansht\cst8277-eclipse\eclipse;;."/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="25.192-b12"/>
+    <property name="java.ext.dirs" value="C:\Java\jdk1.8.0_192\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="52.0"/>
+  </properties>
+  <testcase name="_01_test_create_choice" classname="com.algonquincollege.cst8277.models.ChoiceProductTestSuite" time="0.11"/>
+  <testcase name="_02_test_read_choices" classname="com.algonquincollege.cst8277.models.ChoiceProductTestSuite" time="0.032"/>
+  <testcase name="_03_test_find_choice" classname="com.algonquincollege.cst8277.models.ChoiceProductTestSuite" time="0.008"/>
+  <testcase name="_04_test_update_choice" classname="com.algonquincollege.cst8277.models.ChoiceProductTestSuite" time="0.009"/>
+  <testcase name="_05_test_delete_choice" classname="com.algonquincollege.cst8277.models.ChoiceProductTestSuite" time="0.008"/>
+</testsuite>

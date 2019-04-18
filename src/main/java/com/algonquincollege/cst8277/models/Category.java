@@ -60,9 +60,9 @@ public class Category extends ModelBase implements Serializable {
 
     @JsonbTransient
     @ManyToMany(mappedBy="categories", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-//    @JoinTable(name="CATEGORY_PROD",
-//    joinColumns=@JoinColumn(name="CATEGORY_ID"),
-//    inverseJoinColumns=@JoinColumn(name="PROD_ID"))    
+    //    @JoinTable(name="CATEGORY_PROD",
+    //    joinColumns=@JoinColumn(name="CATEGORY_ID"),
+    //    inverseJoinColumns=@JoinColumn(name="PROD_ID"))    
     public List<Product> getProduct() {
         return products;
     }
@@ -90,7 +90,7 @@ public class Category extends ModelBase implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     /**
      * returns a unique integer value for the object at runtime
      */
@@ -130,17 +130,17 @@ public class Category extends ModelBase implements Serializable {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder
-            .append("Contact [id=")
-            .append(id)
-            .append(", category name=")
-            .append(name)                   
-            .append(", version=")
-            .append(version)
-            .append(", created=")
-            .append(audit.getCreatedDate())
-            .append(", updated=")
-            .append(audit.getUpdatedDate())
-            .append("]")
+        .append("Contact [id=")
+        .append(id)
+        .append(", category name=")
+        .append(name)                   
+        .append(", version=")
+        .append(version)
+        .append(", created=")
+        .append(audit.getCreatedDate())
+        .append(", updated=")
+        .append(audit.getUpdatedDate())
+        .append("]")
         ;
         return builder.toString();
     }

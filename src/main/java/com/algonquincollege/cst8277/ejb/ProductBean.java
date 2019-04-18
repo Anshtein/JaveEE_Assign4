@@ -51,7 +51,7 @@ public class ProductBean {
         em.merge(prodWithUpdatedFields);
         return prodWithUpdatedFields.getId();
     }
-    
+
     /**
      * updates product
      * @param prodWithUpdatedFields
@@ -62,35 +62,18 @@ public class ProductBean {
         em.merge(prodWithUpdatedFields);
         return prodWithUpdatedFields.getId();
     }
-    
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void deleteProductById(int id) {
-        Product product = em.find(Product.class, id);
-        
-        if(product != null && product.getId() > 0) {
-            em.createNativeQuery("DELETE FROM CHOICE " + 
-                    "WHERE PRODUCT_ID = " + id).executeUpdate();
-            
-            em.createNativeQuery("DELETE FROM CATEGORY_PROD " + 
-                    "WHERE PROD_ID = " + id).executeUpdate();
-            
-            em.createNativeQuery("DELETE FROM PRODUCT " + 
-                    "WHERE ID = " + id).executeUpdate();
-
-        }
-    }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void deleteProductById(int id) {
         Product product = em.find(Product.class, id);
-        
+
         if(product != null && product.getId() > 0) {
             em.createNativeQuery("DELETE FROM CHOICE " + 
                     "WHERE PRODUCT_ID = " + id).executeUpdate();
-            
+
             em.createNativeQuery("DELETE FROM CATEGORY_PROD " + 
                     "WHERE PROD_ID = " + id).executeUpdate();
-            
+
             em.createNativeQuery("DELETE FROM PRODUCT " + 
                     "WHERE ID = " + id).executeUpdate();
 
@@ -116,7 +99,7 @@ public class ProductBean {
     public Product getProductById(int id) {
         return em.find(Product.class, id);
     }
-    
+
     /**
      * finds list of product of a certain category
      * @param id
@@ -126,9 +109,9 @@ public class ProductBean {
         Query q = em.createNativeQuery("SELECT * FROM PRODUCT P, CATEGORY_PROD CP " + 
                 "WHERE P.ID = CP.PROD_ID AND CP.CATEGORY_ID = ?");
         q.setParameter(1, id);
-        
+
         List<Product> products = q.getResultList();
-        
+
         return products;
     }
 }
