@@ -88,12 +88,12 @@ public class BuildUser {
 
             Set<PlatformRole> platformRoles = new HashSet<PlatformRole>();
             for (PlatformRole x : customerRole) 
-            	platformRoles.add(x); 
+                platformRoles.add(x); 
             user.setPlatformRoles(platformRoles);
             jpaHelper.savePlatformUser(user);
         }
-		return user;
+        return user;
     }
-    
-       
+
+
 }

@@ -1,0 +1,7 @@
+com\algonquincollege\cst8277\models\ProductCategoryTestSuite.class
+com\algonquincollege\cst8277\models\CustomerTestSuite.class
+com\algonquincollege\cst8277\models\CartChoiceTestSuite.class
+com\algonquincollege\cst8277\models\ProductTestSuite.class
+com\algonquincollege\cst8277\models\CustomerContactTestSuite.class
+com\algonquincollege\cst8277\models\CustomerCartTestSuite.class
+com\algonquincollege\cst8277\models\ChoiceProductTestSuite.class

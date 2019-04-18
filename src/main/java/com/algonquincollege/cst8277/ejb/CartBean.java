@@ -79,7 +79,7 @@ public class CartBean {
             cart = em.merge(cart);
         }
         em.remove(cart);
-        
+
         if(em.contains(cart))
             return false;
         else return true;   

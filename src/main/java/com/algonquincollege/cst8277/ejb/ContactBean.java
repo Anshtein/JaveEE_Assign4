@@ -25,26 +25,22 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
-import javax.persistence.metamodel.SingularAttribute;
-
 import com.algonquincollege.cst8277.models.Contact;
 import com.algonquincollege.cst8277.models.Customer;
-import com.algonquincollege.cst8277.models.PlatformRole;
-import com.algonquincollege.cst8277.models.PlatformRole_;
-import com.algonquincollege.cst8277.models.PlatformUser;
+
 
 /**
  * Stateless session bean containing business logic associated with Contact entity 
  */
 @Stateless
 public class ContactBean {
-    
+
     /**
      * EntityManager injected into the bean
      */
     @PersistenceContext(unitName = PU_NAME)
     protected EntityManager em;
-    
+
     /**
      * finds the list of all contacts
      * @return List of Contact
@@ -72,7 +68,7 @@ public class ContactBean {
         TypedQuery<Contact> q = em.createQuery(cq);
         return q.getSingleResult();    
     }
-    
+
     /**
      * finds list of contacts by atrribute name and keyword
      * @param attributeName
@@ -90,16 +86,16 @@ public class ContactBean {
         TypedQuery<Contact> q = em.createQuery(cq);
         return q.getResultList();
     }
-    
+
     /**
      * checks if the contact was added
      * @return boolean true or false depending on the outcome
      */
     public boolean addContact() { 	
-       
+
         return true;
     }
-    
+
     /**
      * updates contact,
      * annotated with @TransactionAttribute to specify 
@@ -112,7 +108,7 @@ public class ContactBean {
         em.merge(contactWithUpdatedFields);
         return em.find(Contact.class, contactWithUpdatedFields.getId());
     }
-    
+
     /**
      * adds new Contact
      * @param city
@@ -125,7 +121,7 @@ public class ContactBean {
      */
     public boolean addContact(String city, String email, String phone, String postalCode, String province, String street) {
         if (!city.isEmpty() || !email.isEmpty() || !phone.isEmpty() || !postalCode.isEmpty() || !province.isEmpty() || !street.isEmpty()) {
-                            
+
             Contact newContact = new Contact();
             newContact.setCity(city);
             newContact.setEmail(email);
@@ -133,16 +129,16 @@ public class ContactBean {
             newContact.setPostalCode(postalCode);
             newContact.setProvince(province);
             newContact.setStreet(street);
-            
+
             em.persist(newContact);
-                            
+
             if(em.contains(newContact))
                 return true;
             else return false;
         }
         return false;
     }
-    
+
     /**
      * updates existing customer
      * @param customerid
@@ -150,14 +146,14 @@ public class ContactBean {
      * @return Customer customer
      */
     public Customer updateCustomerToContact(int customerid, int contactid) { 	
-    	Contact contact = em.find(Contact.class, contactid);
-    	Customer customer = em.find(Customer.class, customerid);
-    	customer.setContact(contact);
-    	em.merge(customer);
-		return em.find(Customer.class, customer.getId());
-    	
+        Contact contact = em.find(Contact.class, contactid);
+        Customer customer = em.find(Customer.class, customerid);
+        customer.setContact(contact);
+        em.merge(customer);
+        return em.find(Customer.class, customer.getId());
+
     }
-    
+
     /**
      * checks if Contact's values are not empty and updates them
      * @param id
@@ -170,10 +166,10 @@ public class ContactBean {
      * @return Contact contact
      */
     public Contact updateContact(String id, String city, String email, String phone, String postalCode, String province, String street) { 	
-    	if (!city.isEmpty() || !email.isEmpty() || !phone.isEmpty() || !postalCode.isEmpty() || !province.isEmpty() || !street.isEmpty()) {
-            
-    		int cid = Integer.parseInt(id);
-    		
+        if (!city.isEmpty() || !email.isEmpty() || !phone.isEmpty() || !postalCode.isEmpty() || !province.isEmpty() || !street.isEmpty()) {
+
+            int cid = Integer.parseInt(id);
+
             Contact newContact = em.find(Contact.class, cid);
             newContact.setCity(city);
             newContact.setEmail(email);
@@ -181,31 +177,31 @@ public class ContactBean {
             newContact.setPostalCode(postalCode);
             newContact.setProvince(province);
             newContact.setStreet(street);
-            
+
             em.merge(newContact);
-    		return em.find(Contact.class, newContact.getId());
-            
+            return em.find(Contact.class, newContact.getId());
+
         }
         return null;
     }
-    
+
     /**
      * delets contact by customer id
      * @param custID
      * @return true if contact was deleted, false otherwise
      */
     public boolean deleteContactByCustID(int custID) {
-    	
-    	Customer customer = em.find(Customer.class, custID);
-    	Contact contact = customer.getContact();
-    	customer.setContact(null);
-    	em.merge(customer);
-    	
+
+        Customer customer = em.find(Customer.class, custID);
+        Contact contact = customer.getContact();
+        customer.setContact(null);
+        em.merge(customer);
+
         em.remove(contact);
-        
+
         if(em.contains(contact))
             return false;
         return true;   
     }
-    
+
 }

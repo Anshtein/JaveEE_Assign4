@@ -1,3 +1,13 @@
+/********************************************************************egg***m******a**************n************
+ * File: CustomerTestSuite.java
+ * Course materials (19W) CST 8277
+ * @author Elena Soukhanov 040871451
+ * @author Ksenia Lopukhina 040892102
+ * @author Svetlana Netchaeva 040858724
+ * @author Anna Shteyngart 040883547
+ * @author Pavel Jilinski 040878295
+ * @date 2019 04
+ */
 package com.algonquincollege.cst8277.models;
 
 
@@ -35,7 +45,7 @@ public class CustomerTestSuite  {
 
     @BeforeClass
     public static void oneTimeSetUp() {
-    	emf = Persistence.createEntityManagerFactory("shopping_cart_jee56");
+        emf = Persistence.createEntityManagerFactory("shopping_cart_jee56");
         sb = new SimpleBean();
     }
 
@@ -44,31 +54,31 @@ public class CustomerTestSuite  {
      */
     @Test
     public void _01_test_all_Customers_at_start() {
-    	em = emf.createEntityManager();
-    	
-        EntityManager em = emf.createEntityManager();   			
-    	TypedQuery<Customer> query = em.createQuery("SELECT e FROM Customer e", Customer.class);
-    	List<Customer> results = query.getResultList();
-    	assertEquals(4, results.size());
-    	em.close();	    
+        em = emf.createEntityManager();
+
+        EntityManager em = emf.createEntityManager();               
+        TypedQuery<Customer> query = em.createQuery("SELECT e FROM Customer e", Customer.class);
+        List<Customer> results = query.getResultList();
+        assertEquals(4, results.size());
+        em.close();     
     }
-    
+
     /**
      * Test typed query
      */
     @Test
     public void _02_test_all_Customers_at_start() {
-    	em = emf.createEntityManager();
-    	
-    	CriteriaBuilder cb = em.getCriteriaBuilder();
-    	CriteriaQuery<Customer> cq = cb.createQuery(Customer.class);
-    	Root<Customer> root = cq.from(Customer.class);
-    	cq.select(root);
-    	Query query = em.createQuery(cq);
-    	List<Customer> customers = query.getResultList();
-    	
-    	assertEquals(4, customers.size());
-    	em.close();	    
+        em = emf.createEntityManager();
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Customer> cq = cb.createQuery(Customer.class);
+        Root<Customer> root = cq.from(Customer.class);
+        cq.select(root);
+        Query query = em.createQuery(cq);
+        List<Customer> customers = query.getResultList();
+
+        assertEquals(4, customers.size());
+        em.close();     
     }
 
     // C-R-U-D lifecycle
@@ -80,78 +90,78 @@ public class CustomerTestSuite  {
      */
     @Test
     public void _03_createCustomer() {
-    	em = emf.createEntityManager();
-    	   	
-    	String firstName = "junit";
-    	String lastName = "test";
-    	String userPassword = "temppwd";
-    	     
+        em = emf.createEntityManager();
+
+        String firstName = "junit";
+        String lastName = "test";
+        String userPassword = "temppwd";
+
         Customer newCustomer = new Customer();
         newCustomer.setFirstName(firstName);
         newCustomer.setLastName(lastName);
         newCustomer.setUser(null);
-        
+
         em.getTransaction().begin();
         em.persist(newCustomer);
         em.getTransaction().commit();
-    	
-    	CriteriaBuilder cb = em.getCriteriaBuilder();
-    	CriteriaQuery<Customer> cq = cb.createQuery(Customer.class);
-    	Root<Customer> root = cq.from(Customer.class);
-    	cq.select(root).where(cb.equal(root.get("firstName"), firstName));
-    	Query query = em.createQuery(cq);
-    	Customer result = (Customer) query.getSingleResult();
-    	
-    	assertNotNull(result);	
-    	em.close();	    
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Customer> cq = cb.createQuery(Customer.class);
+        Root<Customer> root = cq.from(Customer.class);
+        cq.select(root).where(cb.equal(root.get("firstName"), firstName));
+        Query query = em.createQuery(cq);
+        Customer result = (Customer) query.getSingleResult();
+
+        assertNotNull(result);  
+        em.close();     
     }
-    
+
     /**
      * Test update
      */
     @Test
     public void _04_test_updateCustomer() {
-    	em = emf.createEntityManager();
-    	
-    	CriteriaBuilder cb = em.getCriteriaBuilder();
+        em = emf.createEntityManager();
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Customer> cq = cb.createQuery(Customer.class);
         Root<Customer> root = cq.from(Customer.class);
         cq.select(root);
         cq.where(cb.equal(root.get(Customer_.firstName), "junit"));
         Query query = em.createQuery(cq);
         List<Customer> result = query.getResultList();
-    	
-    	Customer customer = result.get(0);
-    	customer.setFirstName("newname");
-    	em.getTransaction().begin();
-    	em.merge(customer);
-    	em.getTransaction().commit();
-    	
+
+        Customer customer = result.get(0);
+        customer.setFirstName("newname");
+        em.getTransaction().begin();
+        em.merge(customer);
+        em.getTransaction().commit();
+
         cq.where(cb.equal(root.get(Customer_.firstName), "newname"));
         query = em.createQuery(cq);
-    	Customer updated = (Customer) query.getSingleResult();
-    	
-    	
-    	assertEquals("newname", updated.getFirstName());
-    	em.close();	    
+        Customer updated = (Customer) query.getSingleResult();
+
+
+        assertEquals("newname", updated.getFirstName());
+        em.close();     
     }
-    
+
     /**
      * Test delete
      */
     @Test
     public void _05_test_deleteCustomer() {
-    	em = emf.createEntityManager();
-    	
-    	EntityManager em = emf.createEntityManager();
+        em = emf.createEntityManager();
+
+        EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         em.createQuery("delete from Customer c where c.firstName = 'newname'").executeUpdate();
-    	em.getTransaction().commit();
-    	
-    	TypedQuery<Customer> tq = em.createQuery("SELECT c FROM Customer c WHERE c.firstName != 'CRUD'", Customer.class);
-    	List<Customer> result = tq.getResultList();
-    	assertEquals(0, result.size());
-    	em.close();	    
+        em.getTransaction().commit();
+
+        TypedQuery<Customer> tq = em.createQuery("SELECT c FROM Customer c WHERE c.firstName != 'CRUD'", Customer.class);
+        List<Customer> result = tq.getResultList();
+        assertEquals(0, result.size());
+        em.close();     
     }  
-    
+
 }

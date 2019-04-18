@@ -317,28 +317,6 @@ public class ProductResource {
         return response;
     }
 
-    @DELETE
-    @Operation(description = DELETE_PRODUCT_BY_ID)
-    @APIResponses({
-        @APIResponse(responseCode = "200", description = DELETE_PRODUCT_BY_ID_OP_200),
-        @APIResponse(responseCode = "403", description = DELETE_PRODUCT_BY_ID_OP_403),
-        @APIResponse(responseCode = "404", description = GET_PRODUCT_BY_ID_OP_404_DESC)
-    })
     
-    @RolesAllowed(ADMIN_ROLENAME)
-    public Response deleteProductById(@Parameter(description = PRODUCT_ID, required = true)
-                                      @QueryParam(PRODUCT_RESOURCE_PATH_ID_ELEMENT) String id) {
-        Response response = null;
-
-        Product product = prodBean.getProductById(Integer.parseInt(id));
-        if (product == null) {
-            response = Response.status(NOT_FOUND).build();
-        }
-        else {
-            prodBean.deleteProductById(Integer.parseInt(id));
-            response = Response.ok(product).build();
-        }
-        return response;
-    }
 
 }
